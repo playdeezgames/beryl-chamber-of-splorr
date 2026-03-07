@@ -1,8 +1,8 @@
 #include "application.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-static SDL_Renderer* renderer = nullptr;//TODO: make unique_ptr
 static SDL_Window* window = nullptr;//TODO: make unique_ptr
+static SDL_Renderer* renderer = nullptr;//TODO: make unique_ptr
 static SDL_Texture* texture = nullptr;//TODO: make unique_ptr
 static bool quit = false;//TODO: make this based on a optional gamestate variable instead
 void Application::CleanUp()

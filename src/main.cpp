@@ -14,7 +14,8 @@ constexpr size_t SCALE = 4;
 constexpr size_t SCREEN_WIDTH = VIEW_WIDTH * SCALE;
 constexpr size_t SCREEN_HEIGHT = VIEW_HEIGHT * SCALE;
 int main(int, char**) {
-    Application::Initialize(
+    Application application;
+    application.Initialize(
         METAPHOR_TITLE.data(),
         SCREEN_WIDTH,
         SCREEN_HEIGHT,
@@ -22,9 +23,9 @@ int main(int, char**) {
         VIEW_HEIGHT,
         TEXTURE_FILENAME.data());
 #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop(Application::Loop, 0, 1);
+    emscripten_set_main_loop_arg([](void* arg){static_cast<Application*>(arg)->Loop();}, &application, 0, 1);
 #else
-    Application::Run();
+    application.Run();
 #endif
     return 0;
 }

@@ -3,15 +3,15 @@
 class Application
 {
 private:
-    static void CleanUp();
+    void CleanUp();
 public:
-    static void Initialize(
+    void Initialize(
         const std::string& title, 
         int screenWidth, 
         int screenHeight, 
         int viewWidth, 
         int viewHeight,
         const std::string& textureFilename);
-    static void Loop();
-    static void Run();
+    void Loop();
+    void Run();
 };
