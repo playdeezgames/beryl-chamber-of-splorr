@@ -1,27 +1,8 @@
 #include "application.h"
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-static SDL_Window* window = nullptr;//TODO: make unique_ptr
-static SDL_Renderer* renderer = nullptr;//TODO: make unique_ptr
-static SDL_Texture* texture = nullptr;//TODO: make unique_ptr
 static bool quit = false;//TODO: make this based on a optional gamestate variable instead
 Application::~Application()
 {
-    if(texture)
-    {
-        SDL_DestroyTexture(texture);
-        texture = nullptr;
-    }
-    if(renderer)
-    {
-        SDL_DestroyRenderer(renderer);
-        renderer = nullptr;
-    }
-    if(window)
-    {
-        SDL_DestroyWindow(window);
-        window = nullptr;
-    }
    	IMG_Quit();
 	SDL_Quit();
 }
@@ -32,19 +13,22 @@ Application::Application(
     int viewWidth, 
     int viewHeight,
     const std::string& textureFilename)
+    : window(nullptr, SDL_DestroyWindow)
+    , renderer(nullptr, SDL_DestroyRenderer)
+    , texture(nullptr, SDL_DestroyTexture)
 {
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
-    window = SDL_CreateWindow(
+    window.reset(SDL_CreateWindow(
             title.c_str(),
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             screenWidth, 
             screenHeight,
-            SDL_WINDOW_SHOWN);
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    texture = IMG_LoadTexture(renderer, textureFilename.c_str());
-    SDL_RenderSetLogicalSize(renderer, viewWidth, viewHeight);
+            SDL_WINDOW_SHOWN));
+    renderer.reset(SDL_CreateRenderer(window.get(), -1, 0));
+    texture.reset(IMG_LoadTexture(renderer.get(), textureFilename.c_str()));
+    SDL_RenderSetLogicalSize(renderer.get(), viewWidth, viewHeight);
 }
 void Application::Loop()
 {
@@ -56,8 +40,8 @@ void Application::Loop()
 			quit = true;
 		}
     }
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer.get());
+    SDL_RenderPresent(renderer.get());
 }
 void Application::Run()
 {
