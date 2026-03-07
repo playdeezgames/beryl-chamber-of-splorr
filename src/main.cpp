@@ -14,8 +14,7 @@ constexpr size_t SCALE = 4;
 constexpr size_t SCREEN_WIDTH = VIEW_WIDTH * SCALE;
 constexpr size_t SCREEN_HEIGHT = VIEW_HEIGHT * SCALE;
 int main(int, char**) {
-    Application application;
-    application.Initialize(
+    Application application(
         METAPHOR_TITLE.data(),
         SCREEN_WIDTH,
         SCREEN_HEIGHT,

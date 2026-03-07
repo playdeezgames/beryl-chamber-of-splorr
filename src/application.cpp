@@ -5,7 +5,7 @@ static SDL_Window* window = nullptr;//TODO: make unique_ptr
 static SDL_Renderer* renderer = nullptr;//TODO: make unique_ptr
 static SDL_Texture* texture = nullptr;//TODO: make unique_ptr
 static bool quit = false;//TODO: make this based on a optional gamestate variable instead
-void Application::CleanUp()
+Application::~Application()
 {
     if(texture)
     {
@@ -25,7 +25,7 @@ void Application::CleanUp()
    	IMG_Quit();
 	SDL_Quit();
 }
-void Application::Initialize(
+Application::Application(
     const std::string& title, 
     int screenWidth, 
     int screenHeight, 
@@ -65,5 +65,4 @@ void Application::Run()
     {
         Loop();
     }
-    CleanUp();
 }
