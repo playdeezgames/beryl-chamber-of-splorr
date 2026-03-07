@@ -6,6 +6,8 @@ Application::~Application()
    	IMG_Quit();
 	SDL_Quit();
 }
+constexpr int TEXTURE_REGION_COLUMNS = 16;
+constexpr int TEXTURE_REGION_ROWS = 16;
 Application::Application(
     const std::string& title, 
     int screenWidth, 
@@ -14,11 +16,16 @@ Application::Application(
     int viewHeight,
     size_t viewColumns,
     size_t viewRows,
+    int viewCellWidth,
+    int viewCellHeight,
     const std::string& textureFilename)
     : _window(nullptr, SDL_DestroyWindow)
     , _renderer(nullptr, SDL_DestroyRenderer)
     , _texture(nullptr, SDL_DestroyTexture)
     , _frameBuffer(viewColumns, viewRows)
+    , _tiles()
+    , _viewCellWidth(viewCellWidth)
+    , _viewCellHeight(viewCellHeight)
 {
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
@@ -31,6 +38,13 @@ Application::Application(
             SDL_WINDOW_SHOWN));
     _renderer.reset(SDL_CreateRenderer(_window.get(), -1, 0));
     _texture.reset(IMG_LoadTexture(_renderer.get(), textureFilename.c_str()));
+    for(auto row : std::views::iota(0, TEXTURE_REGION_ROWS))
+    {
+        for(auto column: std::views::iota(0, TEXTURE_REGION_COLUMNS))
+        {
+            _tiles.emplace_back(_texture.get(),column * viewCellWidth, row * viewCellHeight, viewCellWidth, viewCellHeight);
+        }
+    }
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
     _frameBuffer.WriteText(0,0,"Hello, world!",FrameBufferCellColor::LIGHT_GRAY, FrameBufferCellColor::DARK_GRAY);
 }
@@ -45,7 +59,14 @@ void Application::Loop()
 		}
     }
     SDL_RenderClear(_renderer.get());
-    //TODO: render frame buffer
+    for(auto row: std::views::iota(size_t{0}, _frameBuffer.GetRows()))
+    {
+        for(auto column: std::views::iota(size_t{0}, _frameBuffer.GetColumns()))
+        {
+            const auto& cell = _frameBuffer.GetCell(column, row);
+            _tiles[cell.GetCharacter()].Render(_renderer.get(),column * _viewCellWidth, row * _viewCellHeight, {255,255,255,255});
+        }
+    }
     SDL_RenderPresent(_renderer.get());
 }
 void Application::Run()

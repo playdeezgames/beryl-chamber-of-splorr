@@ -22,6 +22,8 @@ int main(int, char**) {
         VIEW_HEIGHT,
         VIEW_COLUMNS,
         VIEW_ROWS,
+        VIEW_CELL_WIDTH,
+        VIEW_CELL_HEIGHT,
         TEXTURE_FILENAME.data());
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop_arg([](void* arg){static_cast<Application*>(arg)->Loop();}, &application, 0, 1);
