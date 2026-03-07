@@ -12,23 +12,27 @@ Application::Application(
     int screenHeight, 
     int viewWidth, 
     int viewHeight,
+    size_t viewColumns,
+    size_t viewRows,
     const std::string& textureFilename)
-    : window(nullptr, SDL_DestroyWindow)
-    , renderer(nullptr, SDL_DestroyRenderer)
-    , texture(nullptr, SDL_DestroyTexture)
+    : _window(nullptr, SDL_DestroyWindow)
+    , _renderer(nullptr, SDL_DestroyRenderer)
+    , _texture(nullptr, SDL_DestroyTexture)
+    , _frameBuffer(viewColumns, viewRows)
 {
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
-    window.reset(SDL_CreateWindow(
+    _window.reset(SDL_CreateWindow(
             title.c_str(),
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             screenWidth, 
             screenHeight,
             SDL_WINDOW_SHOWN));
-    renderer.reset(SDL_CreateRenderer(window.get(), -1, 0));
-    texture.reset(IMG_LoadTexture(renderer.get(), textureFilename.c_str()));
-    SDL_RenderSetLogicalSize(renderer.get(), viewWidth, viewHeight);
+    _renderer.reset(SDL_CreateRenderer(_window.get(), -1, 0));
+    _texture.reset(IMG_LoadTexture(_renderer.get(), textureFilename.c_str()));
+    SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
+    _frameBuffer.WriteText(0,0,"Hello, world!",FrameBufferCellColor::LIGHT_GRAY, FrameBufferCellColor::DARK_GRAY);
 }
 void Application::Loop()
 {
@@ -40,8 +44,9 @@ void Application::Loop()
 			quit = true;
 		}
     }
-    SDL_RenderClear(renderer.get());
-    SDL_RenderPresent(renderer.get());
+    SDL_RenderClear(_renderer.get());
+    //TODO: render frame buffer
+    SDL_RenderPresent(_renderer.get());
 }
 void Application::Run()
 {

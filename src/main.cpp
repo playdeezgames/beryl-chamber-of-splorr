@@ -20,6 +20,8 @@ int main(int, char**) {
         SCREEN_HEIGHT,
         VIEW_WIDTH,
         VIEW_HEIGHT,
+        VIEW_COLUMNS,
+        VIEW_ROWS,
         TEXTURE_FILENAME.data());
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop_arg([](void* arg){static_cast<Application*>(arg)->Loop();}, &application, 0, 1);
