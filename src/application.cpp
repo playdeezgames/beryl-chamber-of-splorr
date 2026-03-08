@@ -26,6 +26,7 @@ Application::Application(
     , _tileSet()
     , _plotter(0,0,viewCellWidth,viewCellHeight)
     , _palette()
+    , _frameBufferRenderer(_frameBuffer, _tileSet, _plotter, _palette)
 {
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
@@ -69,15 +70,7 @@ void Application::Loop()
 		}
     }
     SDL_RenderClear(_renderer.get());
-    for(auto row: std::views::iota(size_t{0}, _frameBuffer.GetRows()))
-    {
-        for(auto column: std::views::iota(size_t{0}, _frameBuffer.GetColumns()))
-        {
-            const auto& cell = _frameBuffer.GetCell(column, row);
-            _tileSet.GetTile(219).Render(_renderer.get(),_plotter.PlotX(column), _plotter.PlotY(row), _palette.GetColor(cell.GetBackground()));
-            _tileSet.GetTile(cell.GetCharacter()).Render(_renderer.get(),_plotter.PlotX(column), _plotter.PlotY(row), _palette.GetColor(cell.GetForeground()));
-        }
-    }
+    _frameBufferRenderer.Render(_renderer.get());
     SDL_RenderPresent(_renderer.get());
 }
 void Application::Run()

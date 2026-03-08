@@ -5,6 +5,7 @@
 #include "tileset.h"
 #include "plotter.h"
 #include "palette.h"
+#include "framebufferrenderer.h"
 class Application
 {
 private:
@@ -15,6 +16,7 @@ private:
     TileSet _tileSet;
     Plotter _plotter;
     Palette _palette;
+    FrameBufferRenderer _frameBufferRenderer;
     Application();
 public:
     Application(
