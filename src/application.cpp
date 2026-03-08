@@ -23,7 +23,7 @@ Application::Application(
     , _renderer(nullptr, SDL_DestroyRenderer)
     , _texture(nullptr, SDL_DestroyTexture)
     , _frameBuffer(viewColumns, viewRows)
-    , _tiles()
+    , _tileSet()
     , _viewCellWidth(viewCellWidth)
     , _viewCellHeight(viewCellHeight)
 {
@@ -38,13 +38,7 @@ Application::Application(
             SDL_WINDOW_SHOWN));
     _renderer.reset(SDL_CreateRenderer(_window.get(), -1, 0));
     _texture.reset(IMG_LoadTexture(_renderer.get(), textureFilename.c_str()));
-    for(auto row : std::views::iota(0, TEXTURE_REGION_ROWS))
-    {
-        for(auto column: std::views::iota(0, TEXTURE_REGION_COLUMNS))
-        {
-            _tiles.emplace_back(_texture.get(),column * viewCellWidth, row * viewCellHeight, viewCellWidth, viewCellHeight);
-        }
-    }
+    _tileSet.Add(_texture.get(),viewCellWidth,viewCellHeight);
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
     _frameBuffer.WriteText(0,0,"Hello, world!",FrameBufferCellColor::LIGHT_GRAY, FrameBufferCellColor::DARK_GRAY);
 }
@@ -64,7 +58,7 @@ void Application::Loop()
         for(auto column: std::views::iota(size_t{0}, _frameBuffer.GetColumns()))
         {
             const auto& cell = _frameBuffer.GetCell(column, row);
-            _tiles[cell.GetCharacter()].Render(_renderer.get(),column * _viewCellWidth, row * _viewCellHeight, {255,255,255,255});
+            _tileSet.GetTile(cell.GetCharacter()).Render(_renderer.get(),column * _viewCellWidth, row * _viewCellHeight, {255,255,255,255});
         }
     }
     SDL_RenderPresent(_renderer.get());

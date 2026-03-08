@@ -2,7 +2,7 @@
 #include "common.h"
 #include <SDL2/SDL.h>
 #include "framebuffer.h"
-#include "tile.h"
+#include "tileset.h"
 class Application
 {
 private:
@@ -10,7 +10,7 @@ private:
     std::unique_ptr<SDL_Renderer, void(*)(SDL_Renderer*)> _renderer;
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> _texture;
     FrameBuffer _frameBuffer;
-    std::vector<Tile> _tiles;
+    TileSet _tileSet;
     int _viewCellWidth;
     int _viewCellHeight;
     Application();
