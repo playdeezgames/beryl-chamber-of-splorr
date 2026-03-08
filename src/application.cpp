@@ -24,9 +24,25 @@ Application::Application(
     , _texture(nullptr, SDL_DestroyTexture)
     , _frameBuffer(viewColumns, viewRows)
     , _tileSet()
-    , _viewCellWidth(viewCellWidth)
-    , _viewCellHeight(viewCellHeight)
+    , _plotter(0,0,viewCellWidth,viewCellHeight)
+    , _palette()
 {
+	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
+	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
+	_palette.SetColor(FrameBufferCellColor::GREEN,{0,170,0,255});
+	_palette.SetColor(FrameBufferCellColor::CYAN,{0,170,170,255});
+	_palette.SetColor(FrameBufferCellColor::RED,{170,0,0,255});
+	_palette.SetColor(FrameBufferCellColor::MAGENTA,{170,0,170,255});
+	_palette.SetColor(FrameBufferCellColor::BROWN,{170,85,0,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_GRAY,{170,170,170,255});
+	_palette.SetColor(FrameBufferCellColor::DARK_GRAY,{85,85,85,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_BLUE,{85,85,255,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_GREEN,{85,255,85,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_CYAN,{85,255,255,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_RED,{255,85,85,255});
+	_palette.SetColor(FrameBufferCellColor::LIGHT_MAGENTA,{255,85,255,255});
+	_palette.SetColor(FrameBufferCellColor::YELLOW,{255,255,85,255});
+	_palette.SetColor(FrameBufferCellColor::WHITE,{255,255,255,255});
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
     _window.reset(SDL_CreateWindow(
@@ -58,7 +74,8 @@ void Application::Loop()
         for(auto column: std::views::iota(size_t{0}, _frameBuffer.GetColumns()))
         {
             const auto& cell = _frameBuffer.GetCell(column, row);
-            _tileSet.GetTile(cell.GetCharacter()).Render(_renderer.get(),column * _viewCellWidth, row * _viewCellHeight, {255,255,255,255});
+            _tileSet.GetTile(219).Render(_renderer.get(),_plotter.PlotX(column), _plotter.PlotY(row), _palette.GetColor(cell.GetBackground()));
+            _tileSet.GetTile(cell.GetCharacter()).Render(_renderer.get(),_plotter.PlotX(column), _plotter.PlotY(row), _palette.GetColor(cell.GetForeground()));
         }
     }
     SDL_RenderPresent(_renderer.get());

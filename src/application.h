@@ -3,6 +3,8 @@
 #include <SDL2/SDL.h>
 #include "framebuffer.h"
 #include "tileset.h"
+#include "plotter.h"
+#include "palette.h"
 class Application
 {
 private:
@@ -11,8 +13,8 @@ private:
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> _texture;
     FrameBuffer _frameBuffer;
     TileSet _tileSet;
-    int _viewCellWidth;
-    int _viewCellHeight;
+    Plotter _plotter;
+    Palette _palette;
     Application();
 public:
     Application(
