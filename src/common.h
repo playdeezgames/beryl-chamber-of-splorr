@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <queue>
 #include <ranges>
 #include <string>
 #include <vector>

@@ -27,6 +27,9 @@ Application::Application(
     , _plotter(0,0,viewCellWidth,viewCellHeight)
     , _palette()
     , _frameBufferRenderer(_frameBuffer, _tileSet, _plotter, _palette)
+    , _commandBuffer()
+	, _column(viewColumns/2)
+	, _row(viewRows/2)
 {
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
@@ -57,8 +60,29 @@ Application::Application(
     _texture.reset(IMG_LoadTexture(_renderer.get(), textureFilename.c_str()));
     _tileSet.Add(_texture.get(),viewCellWidth,viewCellHeight);
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
-    _frameBuffer.WriteText(0,0,"Hello, world!",FrameBufferCellColor::LIGHT_GRAY, FrameBufferCellColor::DARK_GRAY);
+    _frameBuffer.Fill(size_t{0},size_t{0},_frameBuffer.GetColumns(),1,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
+    _frameBuffer.Fill(size_t{0},_frameBuffer.GetRows() - 1,_frameBuffer.GetColumns(),1,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
+    _frameBuffer.Fill(size_t{0},size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
+    _frameBuffer.Fill(_frameBuffer.GetColumns() - 1,size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
 }
+static std::map<SDL_Keycode, CommandType> keycodeCommands = 
+{
+	{ SDLK_w         , CommandType::UP     },
+	{ SDLK_z         , CommandType::UP     },
+	{ SDLK_UP        , CommandType::UP     },
+	{ SDLK_a         , CommandType::LEFT   },
+	{ SDLK_q         , CommandType::LEFT   },
+	{ SDLK_LEFT      , CommandType::LEFT   },
+	{ SDLK_s         , CommandType::DOWN   },
+	{ SDLK_DOWN      , CommandType::DOWN   },
+	{ SDLK_d         , CommandType::RIGHT  },
+	{ SDLK_RIGHT     , CommandType::RIGHT  },
+	{ SDLK_SPACE     , CommandType::GREEN  },
+	{ SDLK_BACKSPACE , CommandType::RED    },
+	{ SDLK_ESCAPE    , CommandType::RED    },
+	{ SDLK_TAB       , CommandType::YELLOW },
+	{ SDLK_RETURN    , CommandType::BLUE   }
+};
 void Application::Loop()
 {
 	SDL_Event event;
@@ -67,10 +91,52 @@ void Application::Loop()
 		if(event.type == SDL_QUIT)
 		{
 			quit = true;
+            break;
+		}
+		else if(event.type == SDL_KEYDOWN)
+		{
+			auto iter = keycodeCommands.find(event.key.keysym.sym);
+			if(iter!=keycodeCommands.end())
+			{
+				_commandBuffer.Write(iter->second);
+			}
 		}
     }
+	do
+	{
+		auto command = _commandBuffer.Read();
+		if(!command) break;
+		size_t nextColumn = _column;
+		size_t nextRow = _row;
+		switch(*command)
+		{
+			case CommandType::UP:
+				nextRow--;
+				break;
+			case CommandType::DOWN:
+				nextRow++;
+				break;
+			case CommandType::LEFT:
+				nextColumn--;
+				break;
+			case CommandType::RIGHT:
+				nextColumn++;
+				break;
+			default:
+				break;
+		}
+		if(_frameBuffer.GetCell(nextColumn, nextRow).GetCharacter()==219)
+		{
+			nextColumn = _column;
+			nextRow = _row;
+		}
+		_column = nextColumn;
+		_row = nextRow;
+	} while (true);
     SDL_RenderClear(_renderer.get());
+	_frameBuffer.SetCell(_column, _row, '@', FrameBufferCellColor::LIGHT_GRAY, std::nullopt);
     _frameBufferRenderer.Render(_renderer.get());
+	_frameBuffer.SetCell(_column, _row, 0, FrameBufferCellColor::BLACK, std::nullopt);
     SDL_RenderPresent(_renderer.get());
 }
 void Application::Run()

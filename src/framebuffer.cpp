@@ -1,13 +1,13 @@
 #include "framebuffer.h"
 FrameBuffer::FrameBuffer(size_t columns, size_t rows)
-    : _cells(columns * rows)
+    : _cells()
     , _columns(columns)
     , _rows(rows)
 {
     //TODO: use a back inserter?
     while(_cells.size() <_columns * _rows)
     {
-        _cells.push_back(FrameBufferCell());
+        _cells.emplace_back();
     }
 }
 size_t FrameBuffer::GetColumns() const
@@ -47,9 +47,9 @@ void FrameBuffer::Fill(
     std::optional<FrameBufferCellColor> foreground, 
     std::optional<FrameBufferCellColor> background)
 {
-    for(size_t c : std::views::iota(column, columns))
+    for(size_t c : std::views::iota(column, column + columns))
     {
-        for(size_t r : std::views::iota(row, rows))
+        for(size_t r : std::views::iota(row, row + rows))
         {
             SetCell(c, r, character, foreground, background);
         }

@@ -6,6 +6,7 @@
 #include "plotter.h"
 #include "palette.h"
 #include "framebufferrenderer.h"
+#include "commandbuffer.h"
 class Application
 {
 private:
@@ -17,6 +18,9 @@ private:
     Plotter _plotter;
     Palette _palette;
     FrameBufferRenderer _frameBufferRenderer;
+    CommandBuffer _commandBuffer;
+    size_t _column;
+    size_t _row;
     Application();
 public:
     Application(

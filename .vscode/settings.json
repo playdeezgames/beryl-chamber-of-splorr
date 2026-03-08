@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/yermom/git/beryl-chamber-of-splorr",
+            "binaryPath": "/home/yermom/git/beryl-chamber-of-splorr/berylchamber",
+            "binaryArgs": []
+        }
+    ]
+}
