@@ -7,6 +7,8 @@
 #include "palette.h"
 #include "framebufferrenderer.h"
 #include "commandbuffer.h"
+#include "gamestate.h"
+#include "world.h"
 class Application
 {
 private:
@@ -21,6 +23,10 @@ private:
     CommandBuffer _commandBuffer;
     size_t _column;
     size_t _row;
+    std::map<GameStateType, std::unique_ptr<GameState>> _states;
+    std::optional<GameStateType> _state;
+    WorldData _worldData;
+    World _world;
     Application();
 public:
     Application(

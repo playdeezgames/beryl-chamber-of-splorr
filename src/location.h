@@ -3,6 +3,7 @@
 #include "locationdata.h"
 #include "worlddata.h"
 class Character;
+class Board;
 class Location
 {
 private:
@@ -20,4 +21,5 @@ public:
     size_t GetLocationIndex() const;
     void SetCharacter(std::optional<Character> character);
     std::optional<Character> GetCharacter() const;
+    Board GetBoard() const;
 };

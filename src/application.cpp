@@ -1,5 +1,6 @@
 #include "application.h"
 #include <SDL2/SDL_image.h>
+#include "inplaystate.h"
 static bool quit = false;//TODO: make this based on a optional gamestate variable instead
 Application::~Application()
 {
@@ -30,6 +31,10 @@ Application::Application(
     , _commandBuffer()
 	, _column(viewColumns/2)
 	, _row(viewRows/2)
+	, _states()
+	, _state(std::nullopt)
+	, _worldData()
+	, _world(_worldData)
 {
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
@@ -64,6 +69,7 @@ Application::Application(
     _frameBuffer.Fill(size_t{0},_frameBuffer.GetRows() - 1,_frameBuffer.GetColumns(),1,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
     _frameBuffer.Fill(size_t{0},size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
     _frameBuffer.Fill(_frameBuffer.GetColumns() - 1,size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
+	_states.emplace(GameStateType::IN_PLAY, std::make_unique<InPlayState>(_world, _frameBuffer));
 }
 static std::map<SDL_Keycode, CommandType> keycodeCommands = 
 {
