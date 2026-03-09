@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "worlddata.h"
+#include "verbtype.h"
 class Board;
 class Location;
 class Character
@@ -17,4 +18,6 @@ public:
     Board GetBoard() const;
     Location GetLocation() const;
     CharacterType GetCharacterType() const;
+    void AttemptVerb(VerbType verbType);
+    void SetLocation(Location location);
 };

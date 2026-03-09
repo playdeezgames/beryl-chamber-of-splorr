@@ -28,6 +28,8 @@ private:
     WorldData _worldData;
     World _world;
     Application();
+    void Update();
+    void Draw();
 public:
     Application(
         const std::string& title, 

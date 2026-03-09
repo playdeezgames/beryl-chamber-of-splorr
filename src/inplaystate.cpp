@@ -9,6 +9,24 @@ InPlayState::InPlayState(
 std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
 {
     if(command == CommandType::RED) return std::nullopt;
+    auto avatar = *_world.GetAvatar();
+    switch(command)
+    {
+        case CommandType::UP:
+            avatar.AttemptVerb(VerbType::MOVE_UP);
+            break;
+        case CommandType::DOWN:
+            avatar.AttemptVerb(VerbType::MOVE_DOWN);
+            break;
+        case CommandType::LEFT:
+            avatar.AttemptVerb(VerbType::MOVE_LEFT);
+            break;
+        case CommandType::RIGHT:
+            avatar.AttemptVerb(VerbType::MOVE_RIGHT);
+            break;
+        default:
+            break;
+    }
     return GameStateType::IN_PLAY;
 }
 void InPlayState::Draw()

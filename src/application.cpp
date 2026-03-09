@@ -1,7 +1,7 @@
 #include "application.h"
 #include <SDL2/SDL_image.h>
 #include "inplaystate.h"
-static bool quit = false;//TODO: make this based on a optional gamestate variable instead
+#include "verbs.h"
 Application::~Application()
 {
    	IMG_Quit();
@@ -36,6 +36,8 @@ Application::Application(
 	, _worldData()
 	, _world(_worldData)
 {
+	Verbs::Initialize();
+	_world.Initialize();
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
 	_palette.SetColor(FrameBufferCellColor::GREEN,{0,170,0,255});
@@ -65,11 +67,32 @@ Application::Application(
     _texture.reset(IMG_LoadTexture(_renderer.get(), textureFilename.c_str()));
     _tileSet.Add(_texture.get(),viewCellWidth,viewCellHeight);
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
-    _frameBuffer.Fill(size_t{0},size_t{0},_frameBuffer.GetColumns(),1,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
-    _frameBuffer.Fill(size_t{0},_frameBuffer.GetRows() - 1,_frameBuffer.GetColumns(),1,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
-    _frameBuffer.Fill(size_t{0},size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
-    _frameBuffer.Fill(_frameBuffer.GetColumns() - 1,size_t{1},1,_frameBuffer.GetRows() - 2,219,FrameBufferCellColor::BLUE,FrameBufferCellColor::BLACK);
 	_states.emplace(GameStateType::IN_PLAY, std::make_unique<InPlayState>(_world, _frameBuffer));
+	_state = GameStateType::IN_PLAY;
+}
+void Application::Update()
+{
+	if(!_state)
+	{
+		return;
+	}
+	do
+	{
+		auto command = _commandBuffer.Read();
+		if(!command) break;
+		_states[*_state]->HandleCommand(*command);
+	} while (true);
+}
+void Application::Draw()
+{
+	if(!_state)
+	{
+		return;
+	}
+	_states[*_state]->Draw();
+    SDL_RenderClear(_renderer.get());
+    _frameBufferRenderer.Render(_renderer.get());
+    SDL_RenderPresent(_renderer.get());
 }
 static std::map<SDL_Keycode, CommandType> keycodeCommands = 
 {
@@ -96,8 +119,8 @@ void Application::Loop()
 	{
 		if(event.type == SDL_QUIT)
 		{
-			quit = true;
-            break;
+			_state = std::nullopt;
+            return;
 		}
 		else if(event.type == SDL_KEYDOWN)
 		{
@@ -108,46 +131,12 @@ void Application::Loop()
 			}
 		}
     }
-	do
-	{
-		auto command = _commandBuffer.Read();
-		if(!command) break;
-		size_t nextColumn = _column;
-		size_t nextRow = _row;
-		switch(*command)
-		{
-			case CommandType::UP:
-				nextRow--;
-				break;
-			case CommandType::DOWN:
-				nextRow++;
-				break;
-			case CommandType::LEFT:
-				nextColumn--;
-				break;
-			case CommandType::RIGHT:
-				nextColumn++;
-				break;
-			default:
-				break;
-		}
-		if(_frameBuffer.GetCell(nextColumn, nextRow).GetCharacter()==219)
-		{
-			nextColumn = _column;
-			nextRow = _row;
-		}
-		_column = nextColumn;
-		_row = nextRow;
-	} while (true);
-    SDL_RenderClear(_renderer.get());
-	_frameBuffer.SetCell(_column, _row, '@', FrameBufferCellColor::LIGHT_GRAY, std::nullopt);
-    _frameBufferRenderer.Render(_renderer.get());
-	_frameBuffer.SetCell(_column, _row, 0, FrameBufferCellColor::BLACK, std::nullopt);
-    SDL_RenderPresent(_renderer.get());
+	Update();
+	Draw();
 }
 void Application::Run()
 {
-    while(!quit)
+    while(_state)
     {
         Loop();
     }

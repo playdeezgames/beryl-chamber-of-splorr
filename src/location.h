@@ -22,4 +22,6 @@ public:
     void SetCharacter(std::optional<Character> character);
     std::optional<Character> GetCharacter() const;
     Board GetBoard() const;
+    size_t GetColumn() const;
+    size_t GetRow() const;
 };

@@ -1,5 +1,6 @@
 #include "location.h"
 #include "character.h"
+#include "board.h"
 Location::Location(
     WorldData& worldData, 
     size_t boardIndex, 
@@ -53,4 +54,16 @@ std::optional<Character> Location::GetCharacter() const
         return Character(_worldData, *characterIndex);
     }
     return std::nullopt;
+}
+Board Location::GetBoard() const
+{
+    return Board(_worldData, GetBoardIndex());
+}
+size_t Location::GetColumn() const
+{
+    return GetLocationIndex() % GetBoard().GetColumns();
+}
+size_t Location::GetRow() const
+{
+    return GetLocationIndex() / GetBoard().GetColumns();
 }
