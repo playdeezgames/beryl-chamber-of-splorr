@@ -12,3 +12,11 @@ LocationType LocationData::GetLocationType() const
 {
     return _locationType;
 }
+std::optional<size_t> LocationData::GetCharacterIndex() const
+{   
+    return _characterIndex;
+}
+void LocationData::SetCharacterIndex(std::optional<size_t> characterIndex)
+{
+    _characterIndex = characterIndex;
+}

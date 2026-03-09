@@ -20,9 +20,39 @@ void World::Initialize()
         board.GetLocation(0, row).SetLocationType(LocationType::BLUE_WALL);
         board.GetLocation(BOARD_COLUMNS - 1, row).SetLocationType(LocationType::BLUE_WALL);
     }
+    auto character = CreateCharacter(CharacterType::N00B, board.GetLocation(BOARD_COLUMNS / 2, BOARD_ROWS / 2));
+    SetAvatar(character);
 }
 Board World::CreateBoard(size_t columns, size_t rows, LocationType locationType)
 {
     auto index = _worldData.CreateBoard(columns, rows, locationType);
     return Board(_worldData, index);
 }
+Character World::CreateCharacter(CharacterType characterType, Location location)
+{
+    auto index = _worldData.CreateCharacter(characterType, location.GetBoardIndex(), location.GetLocationIndex());
+    auto result = Character(_worldData, index);
+    location.SetCharacter(result);
+    return result;
+}
+void World::SetAvatar(std::optional<Character> avatar)
+{
+    if(avatar)
+    {
+        _worldData.SetAvatar(avatar->GetIndex());
+    }
+    else
+    {
+        _worldData.SetAvatar(std::nullopt);
+    }
+}
+std::optional<Character> World::GetAvatar()
+{
+    auto avatarIndex = _worldData.GetAvatar();
+    if(avatarIndex)
+    {
+        return Character(_worldData, *avatarIndex);
+    }
+    return std::nullopt;
+}
+
