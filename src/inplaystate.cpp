@@ -1,4 +1,5 @@
 #include "inplaystate.h"
+#include "neutral.h"
 InPlayState::InPlayState(
     World& world, 
     FrameBuffer& frameBuffer)
@@ -27,7 +28,7 @@ std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
         default:
             break;
     }
-    return GameStateType::IN_PLAY;
+    return Neutral::DetermineState(_world);
 }
 void InPlayState::Draw()
 {
