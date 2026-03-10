@@ -1,5 +1,6 @@
 #pragma once
 enum class GameStateType
 {
-    IN_PLAY
+    IN_PLAY,
+    MAIN_MENU
 };

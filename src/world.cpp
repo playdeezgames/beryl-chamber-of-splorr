@@ -55,4 +55,8 @@ std::optional<Character> World::GetAvatar()
     }
     return std::nullopt;
 }
+void World::Abandon()
+{
+    _worldData.Clear();
+}
 

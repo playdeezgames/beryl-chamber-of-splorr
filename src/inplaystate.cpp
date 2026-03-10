@@ -9,7 +9,6 @@ InPlayState::InPlayState(
 }
 std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
 {
-    if(command == CommandType::RED) return std::nullopt;
     auto avatar = *_world.GetAvatar();
     switch(command)
     {
@@ -25,6 +24,8 @@ std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
         case CommandType::RIGHT:
             avatar.AttemptVerb(VerbType::MOVE_RIGHT);
             break;
+        case CommandType::RED:
+            return GameStateType::MAIN_MENU;
         default:
             break;
     }

@@ -5,5 +5,5 @@
 class Neutral
 {
 public:
-    static GameStateType DetermineState(const World&);
+    static std::optional<GameStateType> DetermineState(const World&);
 };

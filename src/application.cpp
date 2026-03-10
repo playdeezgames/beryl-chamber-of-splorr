@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include "inplaystate.h"
 #include "verbs.h"
+#include "mainmenustate.h"
 Application::~Application()
 {
    	IMG_Quit();
@@ -37,7 +38,6 @@ Application::Application(
 	, _world(_worldData)
 {
 	Verbs::Initialize();
-	_world.Initialize();
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
 	_palette.SetColor(FrameBufferCellColor::GREEN,{0,170,0,255});
@@ -68,7 +68,8 @@ Application::Application(
     _tileSet.Add(_texture.get(),viewCellWidth,viewCellHeight);
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
 	_states.emplace(GameStateType::IN_PLAY, std::make_unique<InPlayState>(_world, _frameBuffer));
-	_state = GameStateType::IN_PLAY;
+	_states.emplace(GameStateType::MAIN_MENU, std::make_unique<MainMenuState>(_world, _frameBuffer));
+	_state = GameStateType::MAIN_MENU;
 }
 void Application::Update()
 {
@@ -80,8 +81,8 @@ void Application::Update()
 	{
 		auto command = _commandBuffer.Read();
 		if(!command) break;
-		_states[*_state]->HandleCommand(*command);
-	} while (true);
+		_state = _states[*_state]->HandleCommand(*command);
+	} while (_state);
 }
 void Application::Draw()
 {

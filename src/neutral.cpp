@@ -1,5 +1,5 @@
 #include "neutral.h"
-GameStateType Neutral::DetermineState(const World&)
+std::optional<GameStateType> Neutral::DetermineState(const World&)
 {
     return GameStateType::IN_PLAY;
 }
