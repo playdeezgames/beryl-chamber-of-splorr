@@ -3,6 +3,7 @@
 #include "inplaystate.h"
 #include "verbs.h"
 #include "mainmenustate.h"
+#include "confirmquitstate.h"
 Application::~Application()
 {
    	IMG_Quit();
@@ -69,6 +70,7 @@ Application::Application(
     SDL_RenderSetLogicalSize(_renderer.get(), viewWidth, viewHeight);
 	_states.emplace(GameStateType::IN_PLAY, std::make_unique<InPlayState>(_world, _frameBuffer));
 	_states.emplace(GameStateType::MAIN_MENU, std::make_unique<MainMenuState>(_world, _frameBuffer));
+	_states.emplace(GameStateType::CONFIRM_QUIT, std::make_unique<ConfirmQuitState>(_world, _frameBuffer));
 	_state = GameStateType::MAIN_MENU;
 }
 void Application::Update()

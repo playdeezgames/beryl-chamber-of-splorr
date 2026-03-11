@@ -75,7 +75,7 @@ std::optional<GameStateType> MainMenuState::HandleMenuItem(MainMenuItem menuItem
             return GameStateType::MAIN_MENU;
         case MainMenuItem::QUIT:
             ClearMenuItems();
-            return std::nullopt;
+            return GameStateType::CONFIRM_QUIT;
         default:
             return GameStateType::MAIN_MENU;
     }

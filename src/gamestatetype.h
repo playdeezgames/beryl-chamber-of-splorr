@@ -2,5 +2,6 @@
 enum class GameStateType
 {
     IN_PLAY,
-    MAIN_MENU
+    MAIN_MENU,
+    CONFIRM_QUIT
 };
