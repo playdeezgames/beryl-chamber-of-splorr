@@ -6,6 +6,7 @@ CharacterData::CharacterData(
     : _characterType(characterType)
     , _boardIndex(boardIndex)
     , _locationIndex(locationIndex)
+    , _statistics()
 {
 
 }
@@ -29,4 +30,13 @@ size_t CharacterData::GetBoardIndex() const
 size_t CharacterData::GetLocationIndex() const
 {
     return _locationIndex;
+}
+std::optional<int> CharacterData::GetStatistic(StatisticType statisticType) const
+{
+    auto iter = _statistics.find(statisticType);
+    if(iter != _statistics.end())
+    {
+        return iter->second;        
+    }
+    return std::nullopt;
 }

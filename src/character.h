@@ -2,6 +2,7 @@
 #include "common.h"
 #include "worlddata.h"
 #include "verbtype.h"
+#include "statistictype.h"
 class Board;
 class Location;
 class Character
@@ -20,4 +21,5 @@ public:
     CharacterType GetCharacterType() const;
     void AttemptVerb(VerbType verbType);
     void SetLocation(Location location);
+    std::optional<int> GetStatistic(StatisticType statisticType) const;
 };

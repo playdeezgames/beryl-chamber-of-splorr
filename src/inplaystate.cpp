@@ -31,9 +31,9 @@ std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
     }
     return Neutral::DetermineState(_world);
 }
-void InPlayState::Draw()
+static void DrawBoard(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameBuffer)
 {
-    auto board = _world.GetAvatar()->GetBoard();
+    auto board = world.GetAvatar()->GetBoard();
     for(size_t row : std::views::iota(size_t{0}, board.GetRows()))
     {
         for(size_t column: std::views::iota(size_t{0}, board.GetColumns()))
@@ -74,7 +74,22 @@ void InPlayState::Draw()
                         break;
                 }   
             }
-            _frameBuffer.SetCell(column, row, cellCharacter, foreground, background);
+            frameBuffer.SetCell(offsetX + column, offsetY + row, cellCharacter, foreground, background);
         }
     }
+}
+void DrawStats(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameBuffer)
+{
+    auto avatar = *world.GetAvatar();
+    frameBuffer.WriteText(
+        offsetX, 
+        offsetY++, 
+        std::format("SAT: {}", avatar.GetStatistic(StatisticType::SATIETY).value_or(0)), 
+        FrameBufferCellColor::MAGENTA, 
+        std::nullopt);
+}
+void InPlayState::Draw()
+{
+    DrawBoard(0,0,_world, _frameBuffer);
+    DrawStats(25,0,_world, _frameBuffer);
 }

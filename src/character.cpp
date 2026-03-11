@@ -43,3 +43,7 @@ void Character::SetLocation(Location location)
 {
     GetCharacterData().SetLocationIndices(location.GetBoardIndex(), location.GetLocationIndex());
 }
+std::optional<int> Character::GetStatistic(StatisticType statisticType) const
+{
+    return GetCharacterData().GetStatistic(statisticType);
+}
