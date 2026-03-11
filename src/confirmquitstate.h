@@ -9,7 +9,7 @@ public:
     ConfirmQuitState(
         World& world, 
         FrameBuffer& frameBuffer)
-        : ConfirmMenuState(world, frameBuffer, "Are you sure you want to quit?", GameStateType::CONFIRM_QUIT)
+        : ConfirmMenuState(world, frameBuffer, "Are you sure you want to quit?", FrameBufferCellColor::RED, FrameBufferCellColor::BLACK, GameStateType::CONFIRM_QUIT)
     {
     }
 };

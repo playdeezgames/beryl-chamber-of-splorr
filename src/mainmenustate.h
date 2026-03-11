@@ -16,7 +16,7 @@ public:
     MainMenuState(
         World& world, 
         FrameBuffer& frameBuffer)
-        : MenuState(world, frameBuffer, "Main Menu:", GameStateType::MAIN_MENU)
+        : MenuState(world, frameBuffer, "Main Menu:", FrameBufferCellColor::BROWN, FrameBufferCellColor::BLACK, GameStateType::MAIN_MENU)
         {
         }
 };

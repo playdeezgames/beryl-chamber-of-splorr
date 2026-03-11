@@ -5,6 +5,8 @@ class MenuState: public GameState
 {
 private:
     std::string _title;
+    FrameBufferCellColor _foreground;
+    FrameBufferCellColor _background;
     GameStateType _state;
     std::vector<std::tuple<TItem, std::string>> _menuItems;
     size_t _menuItemIndex;
@@ -20,9 +22,13 @@ public:
         World& world, 
         FrameBuffer& frameBuffer,
         const std::string& title,
+        FrameBufferCellColor foreground,
+        FrameBufferCellColor background,
         GameStateType state)
         : GameState(world, frameBuffer)
         , _title(title)
+        , _foreground(foreground)
+        , _background(background)
         , _state(state)
         , _menuItems()
         , _menuItemIndex(0)
@@ -62,7 +68,7 @@ public:
             InitializeMenuItems();
         }
         _frameBuffer.Fill(0,0,_frameBuffer.GetColumns(),_frameBuffer.GetRows(),0,FrameBufferCellColor::BLACK,FrameBufferCellColor::BLACK);
-        _frameBuffer.WriteText(0,0,_title,FrameBufferCellColor::WHITE, std::nullopt);
+        _frameBuffer.WriteText(0,0,_title, _foreground, _background);
 
         size_t row = 2;
         for(size_t index : std::views::iota(size_t{0}, _menuItems.size()))

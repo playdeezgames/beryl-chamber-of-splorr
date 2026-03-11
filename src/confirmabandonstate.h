@@ -9,7 +9,7 @@ public:
     ConfirmAbandonState(
         World& world, 
         FrameBuffer& frameBuffer)
-        : ConfirmMenuState(world, frameBuffer, "Are you sure you want to abandon?", GameStateType::CONFIRM_ABANDON)
+        : ConfirmMenuState(world, frameBuffer, "Are you sure you want to abandon?", FrameBufferCellColor::RED, FrameBufferCellColor::BLACK, GameStateType::CONFIRM_ABANDON)
     {
     }
 };

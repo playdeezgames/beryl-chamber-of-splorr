@@ -17,8 +17,16 @@ public:
         World& world, 
         FrameBuffer& frameBuffer,
         const std::string title,
+        FrameBufferCellColor foreground,
+        FrameBufferCellColor background,
         GameStateType state)
-        : MenuState(world, frameBuffer, title, state)
+        : MenuState(
+            world, 
+            frameBuffer, 
+            title, 
+            foreground, 
+            background, 
+            state)
     {
     }
 };
