@@ -1,5 +1,5 @@
 #pragma once
-#include "gamestate.h"
+#include "menustate.h"
 enum class MainMenuItem
 {
     EMBARK,
@@ -7,25 +7,16 @@ enum class MainMenuItem
     ABANDON,
     QUIT
 };
-class MainMenuState: public GameState
+class MainMenuState: public MenuState<MainMenuItem>
 {
-private:
-    std::vector<std::tuple<MainMenuItem, std::string>> _menuItems;
-    size_t _menuItemIndex;
-    void InitializeMenuItems();
-    void ClearMenuItems();
+protected:
     std::optional<GameStateType> HandleMenuItem(MainMenuItem menuItem);
+    void InitializeMenuItems();
 public:
     MainMenuState(
         World& world, 
         FrameBuffer& frameBuffer)
-        : GameState(world, frameBuffer)
-        , _menuItems()
-        , _menuItemIndex(0)
+        : MenuState(world, frameBuffer, "Main Menu:", GameStateType::MAIN_MENU)
         {
         }
-    void Start() override{}
-    void Stop() override{}
-    std::optional<GameStateType> HandleCommand(CommandType command) override;
-    void Draw() override;
 };
