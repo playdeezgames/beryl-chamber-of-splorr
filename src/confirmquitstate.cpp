@@ -1,17 +1,10 @@
 #include "confirmquitstate.h"
-std::optional<GameStateType> ConfirmQuitState::HandleMenuItem(ConfirmMenuItem menuItem)
+std::optional<GameStateType> ConfirmQuitState::OnConfirm()
 {
-    switch(menuItem)
-    {
-    case ConfirmMenuItem::NO:
-        return GameStateType::MAIN_MENU;
-    case ConfirmMenuItem::YES:
-        return std::nullopt;
-    }
-    throw "shouldnt get here";
+    return std::nullopt;
 }
-void ConfirmQuitState::InitializeMenuItems()
+std::optional<GameStateType> ConfirmQuitState::OnCancel()
 {
-    AddMenuItem(ConfirmMenuItem::NO, "No");
-    AddMenuItem(ConfirmMenuItem::YES, "Yes");
+    ClearMenuItems();
+    return GameStateType::MAIN_MENU;
 }

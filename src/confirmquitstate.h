@@ -1,20 +1,15 @@
 #pragma once
-#include "menustate.h"
-enum class ConfirmMenuItem
-{
-    YES,
-    NO
-};
-class ConfirmQuitState : public MenuState<ConfirmMenuItem>
+#include "confirmmenustate.h"
+class ConfirmQuitState : public ConfirmMenuState
 {
 protected:
-    std::optional<GameStateType> HandleMenuItem(ConfirmMenuItem menuItem) override;
-    void InitializeMenuItems() override;
+    std::optional<GameStateType> OnConfirm() override;
+    std::optional<GameStateType> OnCancel() override;
 public:
     ConfirmQuitState(
         World& world, 
         FrameBuffer& frameBuffer)
-        : MenuState(world, frameBuffer, "Are you sure you want to quit?", GameStateType::CONFIRM_QUIT)
+        : ConfirmMenuState(world, frameBuffer, "Are you sure you want to quit?", GameStateType::CONFIRM_QUIT)
     {
     }
 };

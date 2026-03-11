@@ -8,11 +8,12 @@ private:
     GameStateType _state;
     std::vector<std::tuple<TItem, std::string>> _menuItems;
     size_t _menuItemIndex;
+protected:
     void ClearMenuItems()
     {
         _menuItems.clear();
+        _menuItemIndex = 0;
     }
-protected:
     void AddMenuItem(const TItem item, const std::string& text)
     {
         _menuItems.emplace_back(item, text);
