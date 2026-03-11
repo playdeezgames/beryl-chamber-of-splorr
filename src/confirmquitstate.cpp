@@ -5,6 +5,5 @@ std::optional<GameStateType> ConfirmQuitState::OnConfirm()
 }
 std::optional<GameStateType> ConfirmQuitState::OnCancel()
 {
-    ClearMenuItems();
     return GameStateType::MAIN_MENU;
 }

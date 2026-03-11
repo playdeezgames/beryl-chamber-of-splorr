@@ -24,6 +24,8 @@ public:
         , _menuItemIndex(0)
         {
         }
+    void Start() override{}
+    void Stop() override{}
     std::optional<GameStateType> HandleCommand(CommandType command) override;
     void Draw() override;
 };

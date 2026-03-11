@@ -10,4 +10,6 @@ public:
         FrameBuffer& frameBuffer);
     std::optional<GameStateType> HandleCommand(CommandType command);
     void Draw();
+    void Start() override{}
+    void Stop() override{}
 };

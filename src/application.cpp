@@ -85,7 +85,19 @@ void Application::Update()
 	{
 		auto command = _commandBuffer.Read();
 		if(!command) break;
-		_state = _states[*_state]->HandleCommand(*command);
+		auto nextState = _states[*_state]->HandleCommand(*command);
+		if(nextState != _state)
+		{
+			if(_state)
+			{
+				_states[*_state]->Stop();
+			}
+			_state = nextState;
+			if(_state)
+			{
+				_states[*_state]->Start();
+			}
+		}
 	} while (_state);
 }
 void Application::Draw()
