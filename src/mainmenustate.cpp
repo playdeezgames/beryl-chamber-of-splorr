@@ -70,9 +70,8 @@ std::optional<GameStateType> MainMenuState::HandleMenuItem(MainMenuItem menuItem
             ClearMenuItems();
             return Neutral::DetermineState(_world);
         case MainMenuItem::ABANDON:
-            _world.Abandon();
             ClearMenuItems();
-            return GameStateType::MAIN_MENU;
+            return GameStateType::CONFIRM_ABANDON;
         case MainMenuItem::QUIT:
             ClearMenuItems();
             return GameStateType::CONFIRM_QUIT;
