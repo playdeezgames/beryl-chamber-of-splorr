@@ -22,4 +22,10 @@ public:
     void AttemptVerb(VerbType verbType);
     void SetLocation(Location location);
     std::optional<int> GetStatistic(StatisticType statisticType) const;
+    void SetStatistic(StatisticType statisticType, std::optional<int> statisticValue);
+    void Initialize();
+    int GetStatisticMaximum(StatisticType statisticType) const;
+    int GetStatisticMinimum(StatisticType statisticType) const;
+    void SetStatisticMaximum(StatisticType statisticType, int maximum);
+    void SetStatisticMinimum(StatisticType statisticType, int minimum);
 };

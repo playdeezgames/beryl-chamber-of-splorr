@@ -1,4 +1,6 @@
 #include "characterdata.h"
+#include <limits>
+#include <algorithm>
 CharacterData::CharacterData(
     CharacterType characterType, 
     size_t boardIndex, 
@@ -7,6 +9,8 @@ CharacterData::CharacterData(
     , _boardIndex(boardIndex)
     , _locationIndex(locationIndex)
     , _statistics()
+    , _statisticMaximums()
+    , _statisticMinimums()
 {
 
 }
@@ -36,7 +40,52 @@ std::optional<int> CharacterData::GetStatistic(StatisticType statisticType) cons
     auto iter = _statistics.find(statisticType);
     if(iter != _statistics.end())
     {
-        return iter->second;        
+        return std::clamp(
+            iter->second, 
+            GetStatisticMinimum(statisticType), 
+            GetStatisticMaximum(statisticType));        
     }
     return std::nullopt;
+}
+void CharacterData::SetStatistic(StatisticType statisticType, std::optional<int> statisticValue)
+{
+    if(statisticValue)
+    {
+        _statistics.insert_or_assign(
+            statisticType, 
+            std::clamp(
+                *statisticValue, 
+                GetStatisticMinimum(statisticType), 
+                GetStatisticMaximum(statisticType)));
+    }
+    else
+    {
+        _statistics.erase(statisticType);
+    }
+}
+int CharacterData::GetStatisticMaximum(StatisticType statisticType) const
+{
+    auto iter = _statisticMaximums.find(statisticType);
+    if(iter!=_statisticMaximums.end())
+    {
+        return iter->second;
+    }
+    return std::numeric_limits<int>::max();
+}
+int CharacterData::GetStatisticMinimum(StatisticType statisticType) const
+{
+    auto iter = _statisticMinimums.find(statisticType);
+    if(iter!=_statisticMinimums.end())
+    {
+        return iter->second;
+    }
+    return std::numeric_limits<int>::min();
+}
+void CharacterData::SetStatisticMaximum(StatisticType statisticType, int maximum)
+{
+    _statisticMaximums.insert_or_assign(statisticType, maximum);
+}
+void CharacterData::SetStatisticMinimum(StatisticType statisticType, int minimum)
+{
+    _statisticMinimums.insert_or_assign(statisticType, minimum);
 }

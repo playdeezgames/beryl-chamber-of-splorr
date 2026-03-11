@@ -2,6 +2,7 @@
 #include "board.h"
 #include "location.h"
 #include "verbs.h"
+#include "characters.h"
 Character::Character(
     WorldData& worldData, 
     size_t index)
@@ -47,3 +48,29 @@ std::optional<int> Character::GetStatistic(StatisticType statisticType) const
 {
     return GetCharacterData().GetStatistic(statisticType);
 }
+void Character::Initialize()
+{
+    Characters::GetOutfitter(GetCharacterType()).Initialize(*this);
+}
+void Character::SetStatistic(StatisticType statisticType, std::optional<int> statisticValue)
+{
+    GetCharacterData().SetStatistic(statisticType, statisticValue);
+}
+int Character::GetStatisticMaximum(StatisticType statisticType) const
+{
+    return GetCharacterData().GetStatisticMaximum(statisticType);
+}
+int Character::GetStatisticMinimum(StatisticType statisticType) const
+{
+    return GetCharacterData().GetStatisticMinimum(statisticType);
+}
+void Character::SetStatisticMaximum(StatisticType statisticType, int maximum)
+{
+    GetCharacterData().SetStatisticMaximum(statisticType, maximum);
+}
+void Character::SetStatisticMinimum(StatisticType statisticType, int minimum)
+{
+    GetCharacterData().SetStatisticMinimum(statisticType, minimum);
+}
+
+

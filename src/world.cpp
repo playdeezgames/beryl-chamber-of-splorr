@@ -33,6 +33,7 @@ Character World::CreateCharacter(CharacterType characterType, Location location)
     auto index = _worldData.CreateCharacter(characterType, location.GetBoardIndex(), location.GetLocationIndex());
     auto result = Character(_worldData, index);
     location.SetCharacter(result);
+    result.Initialize();
     return result;
 }
 void World::SetAvatar(std::optional<Character> avatar)

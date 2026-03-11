@@ -84,7 +84,7 @@ void DrawStats(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameB
     frameBuffer.WriteText(
         offsetX, 
         offsetY++, 
-        std::format("SAT: {}", avatar.GetStatistic(StatisticType::SATIETY).value_or(0)), 
+        std::format("SAT: {}/{}", avatar.GetStatistic(StatisticType::SATIETY).value_or(0), avatar.GetStatisticMaximum(StatisticType::SATIETY)), 
         FrameBufferCellColor::MAGENTA, 
         std::nullopt);
 }

@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include "inplaystate.h"
 #include "verbs.h"
+#include "characters.h"
 #include "mainmenustate.h"
 #include "confirmquitstate.h"
 #include "confirmabandonstate.h"
@@ -40,6 +41,7 @@ Application::Application(
 	, _world(_worldData)
 {
 	Verbs::Initialize();
+	Characters::Initialize();
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
 	_palette.SetColor(FrameBufferCellColor::GREEN,{0,170,0,255});
