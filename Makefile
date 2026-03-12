@@ -2,8 +2,9 @@ CXX = g++
 EMXX = em++
 OUTPUT_DIR = html
 SRC_DIR = src
+OBJ_DIR = obj
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_NAME = berylchamber
 CC = -g -std=c++20 -Wall -Wextra -Wpedantic -Iincludes
 
@@ -16,8 +17,8 @@ $(OUTPUT_DIR)/index.html : $(SRCS)
 $(OBJ_NAME) : $(OBJS)
 	$(CXX) $(OBJS) $(CC) -o $(OBJ_NAME) -lSDL2 -lSDL2_image
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CC) -c $< -o $@
 
 clean:
-	rm -f $(SRC_DIR)/*.o $(OBJ_NAME) $(OUTPUT_DIR)/index.html
+	rm -f $(OBJ_DIR)/*.o $(OBJ_NAME) $(OUTPUT_DIR)/index.html
