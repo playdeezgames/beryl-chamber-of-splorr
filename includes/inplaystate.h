@@ -8,8 +8,8 @@ public:
     InPlayState(
         World& world, 
         FrameBuffer& frameBuffer);
-    std::optional<GameStateType> HandleCommand(CommandType command);
-    void Draw();
+    std::optional<GameStateType> HandleCommand(CommandType command) override;
+    void Draw() override;
     void Start() override{}
     void Stop() override{}
 };

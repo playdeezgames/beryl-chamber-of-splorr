@@ -12,8 +12,6 @@ Application::~Application()
    	IMG_Quit();
 	SDL_Quit();
 }
-constexpr int TEXTURE_REGION_COLUMNS = 16;
-constexpr int TEXTURE_REGION_ROWS = 16;
 Application::Application(
     const std::string& title, 
     int screenWidth, 
