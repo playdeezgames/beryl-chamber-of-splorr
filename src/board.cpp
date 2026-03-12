@@ -1,4 +1,5 @@
 #include "board.h"
+#include "character.h"
 Board::Board(
     WorldData& worldData, 
     size_t index)
@@ -31,4 +32,18 @@ size_t Board::GetColumns() const
 size_t Board::GetRows() const
 {
     return GetBoardData().GetRows();
+}
+void Board::DoTurn()
+{
+    for(size_t column : std::views::iota(size_t{0}, GetColumns()))
+    {
+        for(size_t row : std::views::iota(size_t{0}, GetRows()))
+        {
+            auto character = GetLocation(column, row).GetCharacter();
+            if(character)
+            {
+                character->DoTurn();
+            }
+        }
+    }
 }

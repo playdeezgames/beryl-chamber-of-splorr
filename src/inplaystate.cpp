@@ -14,15 +14,19 @@ std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
     {
         case CommandType::UP:
             avatar.AttemptVerb(VerbType::MOVE_UP);
+            avatar.GetBoard().DoTurn();
             break;
         case CommandType::DOWN:
             avatar.AttemptVerb(VerbType::MOVE_DOWN);
+            avatar.GetBoard().DoTurn();
             break;
         case CommandType::LEFT:
             avatar.AttemptVerb(VerbType::MOVE_LEFT);
+            avatar.GetBoard().DoTurn();
             break;
         case CommandType::RIGHT:
             avatar.AttemptVerb(VerbType::MOVE_RIGHT);
+            avatar.GetBoard().DoTurn();
             break;
         case CommandType::RED:
             return GameStateType::MAIN_MENU;
@@ -84,8 +88,14 @@ void DrawStats(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameB
     frameBuffer.WriteText(
         offsetX, 
         offsetY++, 
-        std::format("SAT: {}/{}", avatar.GetStatistic(StatisticType::SATIETY).value_or(0), avatar.GetStatisticMaximum(StatisticType::SATIETY)), 
+        std::format("SAT:{:>3}/{:>3}    ", avatar.GetStatistic(StatisticType::SATIETY).value_or(0), avatar.GetStatisticMaximum(StatisticType::SATIETY)), 
         FrameBufferCellColor::MAGENTA, 
+        std::nullopt);
+    frameBuffer.WriteText(
+        offsetX, 
+        offsetY++, 
+        std::format("HLT:{:>3}/{:>3}    ", avatar.GetStatistic(StatisticType::HEALTH).value_or(0), avatar.GetStatisticMaximum(StatisticType::HEALTH)), 
+        FrameBufferCellColor::RED, 
         std::nullopt);
 }
 void InPlayState::Draw()

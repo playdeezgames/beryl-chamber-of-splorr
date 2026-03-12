@@ -52,9 +52,10 @@ void Character::Initialize()
 {
     Characters::GetOutfitter(GetCharacterType()).Initialize(*this);
 }
-void Character::SetStatistic(StatisticType statisticType, std::optional<int> statisticValue)
+std::optional<int> Character::SetStatistic(StatisticType statisticType, std::optional<int> statisticValue)
 {
     GetCharacterData().SetStatistic(statisticType, statisticValue);
+    return GetStatistic(statisticType);
 }
 int Character::GetStatisticMaximum(StatisticType statisticType) const
 {
@@ -72,5 +73,12 @@ void Character::SetStatisticMinimum(StatisticType statisticType, int minimum)
 {
     GetCharacterData().SetStatisticMinimum(statisticType, minimum);
 }
-
+void Character::DoTurn()
+{
+    Characters::GetOutfitter(GetCharacterType()).DoTurn(*this);
+}
+int Character::ChangeStatistic(StatisticType statisticType, int delta)
+{
+    return *SetStatistic(statisticType, *GetStatistic(statisticType) + delta);
+}
 

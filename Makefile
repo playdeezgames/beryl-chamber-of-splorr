@@ -4,7 +4,7 @@ OUTPUT_DIR = html
 SRC_DIR = src
 OBJS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_NAME = berylchamber
-CC = -g -std=c++20 -Wall -Wextra -Wpedantic
+CC = -g -std=c++20 -Wall -Wextra -Wpedantic -Iincludes
 
 all : $(OBJS)
 	mkdir -p $(OUTPUT_DIR)

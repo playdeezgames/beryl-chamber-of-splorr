@@ -15,4 +15,5 @@ public:
     Location GetLocation(size_t column, size_t row);
     size_t GetColumns() const;
     size_t GetRows() const;
+    void DoTurn();
 };
