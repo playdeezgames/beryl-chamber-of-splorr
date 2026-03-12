@@ -47,7 +47,7 @@ void World::SetAvatar(std::optional<Character> avatar)
         _worldData.SetAvatar(std::nullopt);
     }
 }
-std::optional<Character> World::GetAvatar()
+std::optional<Character> World::GetAvatar() const
 {
     auto avatarIndex = _worldData.GetAvatar();
     if(avatarIndex)

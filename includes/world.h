@@ -16,5 +16,5 @@ public:
     Board CreateBoard(size_t columns, size_t rows, LocationType locationType);
     Character CreateCharacter(CharacterType characterType, Location location);
     void SetAvatar(std::optional<Character> avatar);
-    std::optional<Character> GetAvatar();
+    std::optional<Character> GetAvatar() const;
 };
