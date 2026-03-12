@@ -9,6 +9,7 @@ constexpr size_t BOARD_ROWS = 25;
 void World::Initialize()
 {
     _worldData.Clear();
+    //TODO: need a board type with its own initializer!
     auto board = CreateBoard(BOARD_COLUMNS, BOARD_ROWS, LocationType::FLOOR);
     for(size_t column : std::views::iota(size_t{0}, BOARD_COLUMNS))
     {
@@ -21,6 +22,7 @@ void World::Initialize()
         board.GetLocation(BOARD_COLUMNS - 1, row).SetLocationType(LocationType::BLUE_WALL);
     }
     auto character = CreateCharacter(CharacterType::N00B, board.GetLocation(BOARD_COLUMNS / 2, BOARD_ROWS / 2));
+    CreateItem(ItemType::BAKED_SCALLOPS, board.GetLocation(1,1).GetInventory());
     SetAvatar(character);
 }
 Board World::CreateBoard(size_t columns, size_t rows, LocationType locationType)
@@ -59,5 +61,9 @@ std::optional<Character> World::GetAvatar() const
 void World::Abandon()
 {
     _worldData.Clear();
+}
+Item World::CreateItem(ItemType itemType, Inventory inventory)
+{
+    return Item(_worldData, _worldData.CreateItem(itemType, inventory.GetIndex()));
 }
 

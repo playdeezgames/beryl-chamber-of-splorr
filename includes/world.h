@@ -4,6 +4,8 @@
 #include "board.h"
 #include "charactertype.h"
 #include "character.h"
+#include "item.h"
+#include "inventory.h"
 class World
 {
 private:
@@ -17,4 +19,5 @@ public:
     Character CreateCharacter(CharacterType characterType, Location location);
     void SetAvatar(std::optional<Character> avatar);
     std::optional<Character> GetAvatar() const;
+    Item CreateItem(ItemType itemType, Inventory inventory);
 };

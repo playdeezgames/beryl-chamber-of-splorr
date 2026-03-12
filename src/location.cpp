@@ -1,6 +1,7 @@
 #include "location.h"
 #include "character.h"
 #include "board.h"
+#include "inventory.h"
 Location::Location(
     WorldData& worldData, 
     size_t boardIndex, 
@@ -66,4 +67,14 @@ size_t Location::GetColumn() const
 size_t Location::GetRow() const
 {
     return GetLocationIndex() / GetBoard().GetColumns();
+}
+Inventory Location::GetInventory()
+{
+    std::optional<size_t> inventoryIndex = GetLocationData().GetInventoryIndex();
+    if(!inventoryIndex)
+    {
+        inventoryIndex = _worldData.CreateInventory();
+        GetLocationData().SetInventoryIndex(*inventoryIndex);
+    }
+    return Inventory(_worldData, *inventoryIndex);
 }

@@ -66,3 +66,35 @@ std::optional<size_t> WorldData::GetAvatar() const
 {
     return _avatar;
 }
+size_t WorldData::CreateInventory()
+{
+    size_t result;
+    if(_recycledInventories.empty())
+    {
+        result = _inventories.size();
+        _inventories.emplace_back();
+    }
+    else
+    {
+        result = *_recycledInventories.begin();
+        _recycledInventories.erase(result);
+        _inventories[result] = InventoryData();
+    }
+    return result;
+}
+size_t WorldData::CreateItem(ItemType itemType, size_t inventoryIndex)
+{
+    size_t result;
+    if(_recycledItems.empty())
+    {
+        result = _items.size();
+        _items.emplace_back(itemType, inventoryIndex);
+    }
+    else
+    {
+        result = *_recycledItems.begin();
+        _recycledItems.erase(result);
+        _items[result] = ItemData(itemType, inventoryIndex);
+    }
+    return result;
+}

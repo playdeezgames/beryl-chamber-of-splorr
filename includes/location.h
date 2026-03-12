@@ -4,6 +4,7 @@
 #include "worlddata.h"
 class Character;
 class Board;
+class Inventory;
 class Location
 {
 private:
@@ -24,4 +25,5 @@ public:
     Board GetBoard() const;
     size_t GetColumn() const;
     size_t GetRow() const;
+    Inventory GetInventory();
 };
