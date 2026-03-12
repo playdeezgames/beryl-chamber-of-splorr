@@ -2,6 +2,7 @@
 #include "common.h"
 #include "locationdata.h"
 #include "worlddata.h"
+#include "framebuffercellcolor.h"
 class Character;
 class Board;
 class Inventory;
@@ -26,4 +27,8 @@ public:
     size_t GetColumn() const;
     size_t GetRow() const;
     Inventory GetInventory();
+    void Initialize();
+    unsigned char GetFrameCharacter() const;
+    FrameBufferCellColor GetFrameForeground() const;
+    FrameBufferCellColor GetFrameBackground() const;
 };

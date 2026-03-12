@@ -7,6 +7,7 @@
 #include "confirmquitstate.h"
 #include "confirmabandonstate.h"
 #include "gameoverstate.h"
+#include "locations.h"
 Application::~Application()
 {
    	IMG_Quit();
@@ -41,6 +42,7 @@ Application::Application(
 {
 	Verbs::Initialize();
 	Characters::Initialize();
+	Locations::Initialize();
 	_palette.SetColor(FrameBufferCellColor::BLACK,{0,0,0,255});
 	_palette.SetColor(FrameBufferCellColor::BLUE,{0,0,170,255});
 	_palette.SetColor(FrameBufferCellColor::GREEN,{0,170,0,255});

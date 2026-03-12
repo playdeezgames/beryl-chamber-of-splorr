@@ -28,7 +28,15 @@ void World::Initialize()
 Board World::CreateBoard(size_t columns, size_t rows, LocationType locationType)
 {
     auto index = _worldData.CreateBoard(columns, rows, locationType);
-    return Board(_worldData, index);
+    auto board = Board(_worldData, index);
+    for(auto column : std::views::iota(size_t{0}, columns))
+    {
+        for(auto row : std::views::iota(size_t{0}, rows))
+        {
+            board.GetLocation(column, row).Initialize();
+        }
+    }
+    return board;
 }
 Character World::CreateCharacter(CharacterType characterType, Location location)
 {

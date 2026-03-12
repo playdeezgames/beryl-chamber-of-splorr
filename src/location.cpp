@@ -2,6 +2,7 @@
 #include "character.h"
 #include "board.h"
 #include "inventory.h"
+#include "locations.h"
 Location::Location(
     WorldData& worldData, 
     size_t boardIndex, 
@@ -15,6 +16,7 @@ Location::Location(
 void Location::SetLocationType(LocationType locationType)
 {
     GetLocationData().SetLocationType(locationType);
+    Initialize();
 }
 LocationType Location::GetLocationType() const
 {
@@ -77,4 +79,20 @@ Inventory Location::GetInventory()
         GetLocationData().SetInventoryIndex(*inventoryIndex);
     }
     return Inventory(_worldData, *inventoryIndex);
+}
+void Location::Initialize()
+{
+    Locations::GetOutfitter(GetLocationType()).Initialize(*this);
+}
+unsigned char Location::GetFrameCharacter() const
+{
+    return Locations::GetOutfitter(GetLocationType()).GetFrameCharacter();
+}
+FrameBufferCellColor Location::GetFrameForeground() const
+{
+    return Locations::GetOutfitter(GetLocationType()).GetFrameForeground();
+}
+FrameBufferCellColor Location::GetFrameBackground() const
+{
+    return Locations::GetOutfitter(GetLocationType()).GetFrameBackground();
 }

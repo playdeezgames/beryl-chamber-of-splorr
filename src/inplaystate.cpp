@@ -44,9 +44,9 @@ static void DrawBoard(size_t offsetX, size_t offsetY, World& world, FrameBuffer&
         {
             auto location = board.GetLocation(column, row);
             auto character = location.GetCharacter();
-            unsigned char cellCharacter = '?';
-            FrameBufferCellColor foreground = FrameBufferCellColor::BLACK;
-            FrameBufferCellColor background = FrameBufferCellColor::RED;
+            unsigned char cellCharacter = location.GetFrameCharacter();
+            FrameBufferCellColor foreground = location.GetFrameForeground();
+            FrameBufferCellColor background = location.GetFrameBackground();
             if(character)
             {
                 switch(character->GetCharacterType())
@@ -54,29 +54,10 @@ static void DrawBoard(size_t offsetX, size_t offsetY, World& world, FrameBuffer&
                     case CharacterType::N00B:
                         cellCharacter = '@';
                         foreground = FrameBufferCellColor::LIGHT_GRAY;
-                        background = FrameBufferCellColor::BLACK;
                         break;
                     default:
                         break;
                 }
-            }
-            else
-            {
-                switch(location.GetLocationType())
-                {
-                    case LocationType::BLUE_WALL:
-                        cellCharacter = 219;
-                        foreground = FrameBufferCellColor::BLUE;
-                        background = FrameBufferCellColor::BLACK;
-                        break;
-                    case LocationType::FLOOR:
-                        cellCharacter = 0;
-                        foreground = FrameBufferCellColor::BLACK;
-                        background = FrameBufferCellColor::BLACK;
-                        break;
-                    default:
-                        break;
-                }   
             }
             frameBuffer.SetCell(offsetX + column, offsetY + row, cellCharacter, foreground, background);
         }
