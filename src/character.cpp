@@ -81,4 +81,12 @@ int Character::ChangeStatistic(StatisticType statisticType, int delta)
 {
     return *SetStatistic(statisticType, *GetStatistic(statisticType) + delta);
 }
+unsigned char Character::GetFrameCharacter() const
+{
+    return Characters::GetOutfitter(GetCharacterType()).GetFrameCharacter();
+}
+FrameBufferCellColor Character::GetFrameForeground() const
+{
+    return Characters::GetOutfitter(GetCharacterType()).GetFrameForeground();
+}
 

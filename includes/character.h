@@ -3,6 +3,7 @@
 #include "worlddata.h"
 #include "verbtype.h"
 #include "statistictype.h"
+#include "framebuffercellcolor.h"
 class Board;
 class Location;
 class Character
@@ -30,4 +31,6 @@ public:
     void SetStatisticMinimum(StatisticType statisticType, int minimum);
     void DoTurn();
     int ChangeStatistic(StatisticType statisticType, int delta);
+    unsigned char GetFrameCharacter() const;
+    FrameBufferCellColor GetFrameForeground() const;
 };

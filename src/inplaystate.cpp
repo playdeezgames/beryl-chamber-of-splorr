@@ -49,15 +49,8 @@ static void DrawBoard(size_t offsetX, size_t offsetY, World& world, FrameBuffer&
             FrameBufferCellColor background = location.GetFrameBackground();
             if(character)
             {
-                switch(character->GetCharacterType())
-                {
-                    case CharacterType::N00B:
-                        cellCharacter = '@';
-                        foreground = FrameBufferCellColor::LIGHT_GRAY;
-                        break;
-                    default:
-                        break;
-                }
+                cellCharacter = character->GetFrameCharacter();
+                foreground = character->GetFrameForeground();
             }
             frameBuffer.SetCell(offsetX + column, offsetY + row, cellCharacter, foreground, background);
         }

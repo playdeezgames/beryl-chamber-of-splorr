@@ -20,3 +20,8 @@ void N00bCharacterOutfitter::DoTurn(Character character) const
         character.ChangeStatistic(StatisticType::HEALTH, -1);
     }
 }
+N00bCharacterOutfitter::N00bCharacterOutfitter()
+    : CharacterOutfitter(2, FrameBufferCellColor::LIGHT_GRAY)
+{
+
+}
