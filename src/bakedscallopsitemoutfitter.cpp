@@ -4,7 +4,7 @@ void BakedScallopsItemOutfitter::Initialize(Item) const
 
 }
 BakedScallopsItemOutfitter::BakedScallopsItemOutfitter()
-    : ItemOutfitter('F',FrameBufferCellColor::MAGENTA)
+    : ItemOutfitter(7,FrameBufferCellColor::MAGENTA)
 {
 
 }
