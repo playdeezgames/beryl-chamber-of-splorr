@@ -69,5 +69,5 @@ void DrawStats(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameB
 void InPlayState::Draw()
 {
     DrawBoard(0,0,_world, _frameBuffer);
-    DrawStats(25,0,_world, _frameBuffer);
+    DrawStats(20,0,_world, _frameBuffer);
 }

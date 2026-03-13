@@ -4,8 +4,8 @@ World::World(WorldData& worldData)
 {
 
 }
-constexpr size_t BOARD_COLUMNS = 25;
-constexpr size_t BOARD_ROWS = 25;
+constexpr size_t BOARD_COLUMNS = 20;
+constexpr size_t BOARD_ROWS = 20;
 void World::Initialize()
 {
     _worldData.Clear();
