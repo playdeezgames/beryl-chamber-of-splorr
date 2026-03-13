@@ -16,4 +16,12 @@ const ItemData& Item::GetItemData() const
 {
     return _worldData.GetItemData(_index);
 }
+unsigned char Item::GetFrameCharacter() const
+{
+    return Items::GetOutfitter(GetItemType()).GetFrameCharacter();
+}
+FrameBufferCellColor Item::GetFrameForeground() const
+{
+    return Items::GetOutfitter(GetItemType()).GetFrameForeground();
+}
 

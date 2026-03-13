@@ -30,4 +30,6 @@ public:
     size_t CreateItem(ItemType itemType, size_t inventoryIndex);
     ItemData& GetItemData(size_t itemIndex);
     const ItemData& GetItemData(size_t itemIndex) const;
+    InventoryData& GetInventoryData(size_t inventoryIndex);
+    const InventoryData& GetInventoryData(size_t inventoryIndex) const;
 };

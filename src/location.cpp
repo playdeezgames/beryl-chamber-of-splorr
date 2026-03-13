@@ -91,6 +91,10 @@ unsigned char Location::GetFrameCharacter() const
     {
         return character->GetFrameCharacter();
     }
+    if(HasInventory())
+    {
+        return GetInventory().GetFrameCharacter();
+    }
     return Locations::GetOutfitter(GetLocationType()).GetFrameCharacter();
 }
 FrameBufferCellColor Location::GetFrameForeground() const
@@ -100,9 +104,21 @@ FrameBufferCellColor Location::GetFrameForeground() const
     {
         return character->GetFrameForeground();
     }
+    if(HasInventory())
+    {
+        return GetInventory().GetFrameForeground();
+    }
     return Locations::GetOutfitter(GetLocationType()).GetFrameForeground();
 }
 FrameBufferCellColor Location::GetFrameBackground() const
 {
     return Locations::GetOutfitter(GetLocationType()).GetFrameBackground();
+}
+bool Location::HasInventory() const
+{
+    return GetLocationData().GetInventoryIndex().has_value() && GetInventory().HasItems();
+}
+Inventory Location::GetInventory() const
+{
+    return Inventory(_worldData, *GetLocationData().GetInventoryIndex());
 }

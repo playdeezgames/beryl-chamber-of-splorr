@@ -73,6 +73,7 @@ void World::Abandon()
 Item World::CreateItem(ItemType itemType, Inventory inventory)
 {
     auto item = Item(_worldData, _worldData.CreateItem(itemType, inventory.GetIndex()));
+    inventory.AddItem(item);
     item.Initialize();
     return item;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "worlddata.h"
 #include "itemdata.h"
+#include "framebuffercellcolor.h"
 class Item
 {
 private:
@@ -13,4 +14,7 @@ public:
     Item(WorldData& worldData, size_t index):_worldData(worldData), _index(index){}
     void Initialize();
     ItemType GetItemType() const;
+    size_t GetIndex() const {return _index;}
+    unsigned char GetFrameCharacter() const;
+    FrameBufferCellColor GetFrameForeground() const;
 };

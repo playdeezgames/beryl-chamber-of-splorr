@@ -27,6 +27,8 @@ public:
     size_t GetColumn() const;
     size_t GetRow() const;
     Inventory GetInventory();
+    Inventory GetInventory() const;
+    bool HasInventory() const;
     void Initialize();
     unsigned char GetFrameCharacter() const;
     FrameBufferCellColor GetFrameForeground() const;

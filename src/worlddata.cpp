@@ -106,3 +106,11 @@ const ItemData& WorldData::GetItemData(size_t itemIndex) const
 {
     return _items[itemIndex];
 }
+InventoryData& WorldData::GetInventoryData(size_t inventoryIndex)
+{
+    return _inventories[inventoryIndex];
+}
+const InventoryData& WorldData::GetInventoryData(size_t inventoryIndex) const
+{
+    return _inventories[inventoryIndex];
+}
