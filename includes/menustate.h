@@ -16,6 +16,7 @@ protected:
         _menuItems.emplace_back(item, text);
     }
     virtual std::optional<GameStateType> HandleMenuItem(TItem menuItem) = 0;
+    virtual std::optional<GameStateType> HandleCancel() = 0;
     virtual void InitializeMenuItems() = 0;
 public:
     MenuState(
@@ -56,6 +57,8 @@ public:
             case CommandType::DOWN:
                 _menuItemIndex = (_menuItemIndex + 1) % _menuItems.size();
                 break;
+            case CommandType::RED:
+                return HandleCancel();
             default:
                 break;
         }

@@ -15,3 +15,7 @@ void ConfirmMenuState::InitializeMenuItems()
     AddMenuItem(ConfirmMenuItem::NO, "No");
     AddMenuItem(ConfirmMenuItem::YES, "Yes");
 }
+std::optional<GameStateType> ConfirmMenuState::HandleCancel()
+{
+    return OnCancel();
+}

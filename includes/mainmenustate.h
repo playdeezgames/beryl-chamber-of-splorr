@@ -12,6 +12,7 @@ class MainMenuState: public MenuState<MainMenuItem>
 protected:
     std::optional<GameStateType> HandleMenuItem(MainMenuItem menuItem);
     void InitializeMenuItems();
+    std::optional<GameStateType> HandleCancel() override;
 public:
     MainMenuState(
         World& world, 

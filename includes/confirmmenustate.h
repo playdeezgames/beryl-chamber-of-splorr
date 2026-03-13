@@ -12,6 +12,7 @@ protected:
     void InitializeMenuItems() override;
     virtual std::optional<GameStateType> OnConfirm() = 0;
     virtual std::optional<GameStateType> OnCancel() = 0;
+    std::optional<GameStateType> HandleCancel() override;
 public:
     ConfirmMenuState(
         World& world, 

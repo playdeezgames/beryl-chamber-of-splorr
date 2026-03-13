@@ -31,3 +31,15 @@ std::optional<GameStateType> MainMenuState::HandleMenuItem(MainMenuItem menuItem
             return GameStateType::MAIN_MENU;
     }
 }
+std::optional<GameStateType> MainMenuState::HandleCancel()
+{
+    if(_world.GetAvatar())
+    {
+        return HandleMenuItem(MainMenuItem::CONTINUE);
+    }
+    else
+    {
+        return HandleMenuItem(MainMenuItem::QUIT);
+    }
+}
+
