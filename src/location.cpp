@@ -86,10 +86,20 @@ void Location::Initialize()
 }
 unsigned char Location::GetFrameCharacter() const
 {
+    auto character = GetCharacter();
+    if(character)
+    {
+        return character->GetFrameCharacter();
+    }
     return Locations::GetOutfitter(GetLocationType()).GetFrameCharacter();
 }
 FrameBufferCellColor Location::GetFrameForeground() const
 {
+    auto character = GetCharacter();
+    if(character)
+    {
+        return character->GetFrameForeground();
+    }
     return Locations::GetOutfitter(GetLocationType()).GetFrameForeground();
 }
 FrameBufferCellColor Location::GetFrameBackground() const

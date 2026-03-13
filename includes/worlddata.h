@@ -28,4 +28,6 @@ public:
     std::optional<size_t> GetAvatar() const;
     size_t CreateInventory();
     size_t CreateItem(ItemType itemType, size_t inventoryIndex);
+    ItemData& GetItemData(size_t itemIndex);
+    const ItemData& GetItemData(size_t itemIndex) const;
 };

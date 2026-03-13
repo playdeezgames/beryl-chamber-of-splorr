@@ -98,3 +98,11 @@ size_t WorldData::CreateItem(ItemType itemType, size_t inventoryIndex)
     }
     return result;
 }
+ItemData& WorldData::GetItemData(size_t itemIndex)
+{
+    return _items[itemIndex];
+}
+const ItemData& WorldData::GetItemData(size_t itemIndex) const
+{
+    return _items[itemIndex];
+}

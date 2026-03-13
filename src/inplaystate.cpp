@@ -43,15 +43,9 @@ static void DrawBoard(size_t offsetX, size_t offsetY, World& world, FrameBuffer&
         for(size_t column: std::views::iota(size_t{0}, board.GetColumns()))
         {
             auto location = board.GetLocation(column, row);
-            auto character = location.GetCharacter();
             unsigned char cellCharacter = location.GetFrameCharacter();
             FrameBufferCellColor foreground = location.GetFrameForeground();
             FrameBufferCellColor background = location.GetFrameBackground();
-            if(character)
-            {
-                cellCharacter = character->GetFrameCharacter();
-                foreground = character->GetFrameForeground();
-            }
             frameBuffer.SetCell(offsetX + column, offsetY + row, cellCharacter, foreground, background);
         }
     }
