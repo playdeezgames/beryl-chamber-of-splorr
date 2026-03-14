@@ -22,7 +22,7 @@ void World::Initialize()
         board.GetLocation(BOARD_COLUMNS - 1, row).SetLocationType(LocationType::BLUE_WALL);
     }
     auto character = CreateCharacter(CharacterType::N00B, board.GetLocation(BOARD_COLUMNS / 2, BOARD_ROWS / 2));
-    CreateItem(ItemType::BAKED_SCALLOPS, board.GetLocation(1,1).GetInventory());
+    CreateItem(ItemType::PIE, board.GetLocation(1,1).GetInventory());
     SetAvatar(character);
 }
 Board World::CreateBoard(size_t columns, size_t rows, LocationType locationType)
