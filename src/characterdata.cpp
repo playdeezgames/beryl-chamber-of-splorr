@@ -11,6 +11,7 @@ CharacterData::CharacterData(
     , _statistics()
     , _statisticMaximums()
     , _statisticMinimums()
+    , _inventoryIndex(std::nullopt)
 {
 
 }
@@ -88,4 +89,12 @@ void CharacterData::SetStatisticMaximum(StatisticType statisticType, int maximum
 void CharacterData::SetStatisticMinimum(StatisticType statisticType, int minimum)
 {
     _statisticMinimums.insert_or_assign(statisticType, minimum);
+}
+void CharacterData::SetInventoryIndex(std::optional<size_t> inventoryIndex)
+{
+    _inventoryIndex = inventoryIndex;
+}
+std::optional<size_t> CharacterData::GetInventoryIndex() const
+{
+    return _inventoryIndex;
 }

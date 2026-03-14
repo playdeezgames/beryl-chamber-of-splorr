@@ -1,6 +1,8 @@
 #include "moveverb.h"
 #include "board.h"
 #include "location.h"
+#include "inventory.h"
+#include "item.h"
 MoveVerb::MoveVerb(int deltaX, int deltaY)
     : _deltaX(deltaX)
     , _deltaY(deltaY)
@@ -27,4 +29,14 @@ void MoveVerb::Attempt(Character character) const
     nextLocation.SetCharacter(character);
     location.SetCharacter(std::nullopt);
     character.SetLocation(nextLocation);
+    if(location.HasInventory())
+    {
+        auto locationInventory = location.GetInventory();
+        auto characterInventory = character.GetInventory();
+        for(auto item : locationInventory.GetItems())
+        {
+            characterInventory.AddItem(item);
+            locationInventory.RemoveItem(item);
+        }
+    }
 }

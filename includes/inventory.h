@@ -18,4 +18,5 @@ public:
     void AddItem(Item item);
     void RemoveItem(Item item);
     bool HasItems() const;
+    std::vector<Item> GetItems() const;
 };

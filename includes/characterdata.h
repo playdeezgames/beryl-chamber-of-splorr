@@ -11,6 +11,7 @@ private:
     std::map<StatisticType, int> _statistics;
     std::map<StatisticType, int> _statisticMaximums;
     std::map<StatisticType, int> _statisticMinimums;
+    std::optional<size_t> _inventoryIndex;
     CharacterData();
 public:
     CharacterData(CharacterType characterType, size_t boardIndex, size_t locationIndex);
@@ -25,4 +26,6 @@ public:
     int GetStatisticMinimum(StatisticType statisticType) const;
     void SetStatisticMaximum(StatisticType statisticType, int maximum);
     void SetStatisticMinimum(StatisticType statisticType, int minimum);
+    void SetInventoryIndex(std::optional<size_t> inventoryIndex);
+    std::optional<size_t> GetInventoryIndex() const;
 };

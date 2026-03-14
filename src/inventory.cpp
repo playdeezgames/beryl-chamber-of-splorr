@@ -13,6 +13,7 @@ FrameBufferCellColor Inventory::GetFrameForeground() const
 void Inventory::AddItem(Item item)
 {
     GetInventoryData().AddItemIndex(item.GetIndex());
+    item.SetInventory(*this);
 }
 void Inventory::RemoveItem(Item item)
 {
@@ -29,5 +30,16 @@ InventoryData& Inventory::GetInventoryData()
 const InventoryData& Inventory::GetInventoryData() const
 {
     return _worldData.GetInventoryData(_index);
+}
+std::vector<Item> Inventory::GetItems() const
+{
+    auto itemIndices = GetInventoryData().GetItemIndices();
+    std::vector<Item> result;
+    std::transform(
+        itemIndices.begin(),
+        itemIndices.end(),
+        std::back_inserter(result),
+        [this](size_t index){return Item(_worldData, index);});
+    return result;
 }
 

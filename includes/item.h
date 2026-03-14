@@ -2,6 +2,7 @@
 #include "worlddata.h"
 #include "itemdata.h"
 #include "framebuffercellcolor.h"
+class Inventory;
 class Item
 {
 private:
@@ -17,4 +18,6 @@ public:
     size_t GetIndex() const {return _index;}
     unsigned char GetFrameCharacter() const;
     FrameBufferCellColor GetFrameForeground() const;
+    void SetInventory(Inventory inventory);
+    Inventory GetInventory() const;
 };

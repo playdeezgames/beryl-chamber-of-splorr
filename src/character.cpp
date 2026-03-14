@@ -3,6 +3,7 @@
 #include "location.h"
 #include "verbs.h"
 #include "characters.h"
+#include "inventory.h"
 Character::Character(
     WorldData& worldData, 
     size_t index)
@@ -88,5 +89,23 @@ unsigned char Character::GetFrameCharacter() const
 FrameBufferCellColor Character::GetFrameForeground() const
 {
     return Characters::GetOutfitter(GetCharacterType()).GetFrameForeground();
+}
+Inventory Character::GetInventory()
+{
+    std::optional<size_t> inventoryIndex = GetCharacterData().GetInventoryIndex();
+    if(!inventoryIndex)
+    {
+        inventoryIndex = _worldData.CreateInventory();
+        GetCharacterData().SetInventoryIndex(*inventoryIndex);
+    }
+    return Inventory(_worldData, *inventoryIndex);
+}
+bool Character::HasInventory() const
+{
+    return GetCharacterData().GetInventoryIndex().has_value() && GetInventory().HasItems();
+}
+Inventory Character::GetInventory() const
+{
+    return Inventory(_worldData, *GetCharacterData().GetInventoryIndex());
 }
 

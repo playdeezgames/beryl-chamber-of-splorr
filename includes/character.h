@@ -6,6 +6,7 @@
 #include "framebuffercellcolor.h"
 class Board;
 class Location;
+class Inventory;
 class Character
 {
 private:
@@ -33,4 +34,7 @@ public:
     int ChangeStatistic(StatisticType statisticType, int delta);
     unsigned char GetFrameCharacter() const;
     FrameBufferCellColor GetFrameForeground() const;
+    Inventory GetInventory();
+    bool HasInventory() const;
+    Inventory GetInventory() const;
 };

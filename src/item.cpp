@@ -1,5 +1,6 @@
 #include "item.h"
 #include "items.h"
+#include "inventory.h"
 void Item::Initialize()
 {
     Items::GetOutfitter(GetItemType()).Initialize(*this);
@@ -23,5 +24,13 @@ unsigned char Item::GetFrameCharacter() const
 FrameBufferCellColor Item::GetFrameForeground() const
 {
     return Items::GetOutfitter(GetItemType()).GetFrameForeground();
+}
+void Item::SetInventory(Inventory inventory)
+{
+    GetItemData().SetInventoryIndex(inventory.GetIndex());
+}
+Inventory Item::GetInventory() const
+{
+    return Inventory(_worldData, GetItemData().GetInventoryIndex());
 }
 
