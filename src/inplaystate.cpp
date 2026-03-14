@@ -30,6 +30,8 @@ std::optional<GameStateType> InPlayState::HandleCommand(CommandType command)
             break;
         case CommandType::RED:
             return GameStateType::MAIN_MENU;
+        case CommandType::GREEN:
+            avatar.AttemptVerb(VerbType::TOGGLE_ACTION_MENU);
         default:
             break;
     }

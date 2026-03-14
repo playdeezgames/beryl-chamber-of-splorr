@@ -9,4 +9,5 @@ private:
 public:
     static void Initialize();
     static const Verb& GetVerb(VerbType verbType);
+    static std::vector<std::tuple<VerbType, std::string>> GetActionMenu(Character character);
 };

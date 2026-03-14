@@ -9,6 +9,7 @@
 #include "gameoverstate.h"
 #include "locations.h"
 #include "items.h"
+#include "actionmenustate.h"
 Application::~Application()
 {
    	IMG_Quit();
@@ -79,6 +80,7 @@ Application::Application(
 	_states.emplace(GameStateType::CONFIRM_QUIT, std::make_unique<ConfirmQuitState>(_world, _frameBuffer));
 	_states.emplace(GameStateType::CONFIRM_ABANDON, std::make_unique<ConfirmAbandonState>(_world, _frameBuffer));
 	_states.emplace(GameStateType::GAME_OVER, std::make_unique<GameOverState>(_world, _frameBuffer));
+	_states.emplace(GameStateType::ACTION_MENU, std::make_unique<ActionMenuState>(_world, _frameBuffer));
 	_state = GameStateType::MAIN_MENU;
 }
 void Application::Update()

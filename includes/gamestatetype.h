@@ -5,5 +5,6 @@ enum class GameStateType
     MAIN_MENU,
     CONFIRM_QUIT,
     CONFIRM_ABANDON,
-    GAME_OVER
+    GAME_OVER,
+    ACTION_MENU
 };

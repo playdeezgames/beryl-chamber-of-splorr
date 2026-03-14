@@ -4,6 +4,7 @@
 #include "verbtype.h"
 #include "statistictype.h"
 #include "framebuffercellcolor.h"
+#include "flagtype.h"
 class Board;
 class Location;
 class Inventory;
@@ -37,4 +38,6 @@ public:
     Inventory GetInventory();
     bool HasInventory() const;
     Inventory GetInventory() const;
+    void ToggleFlag(FlagType flag);
+    bool HasFlag(FlagType flag) const;
 };

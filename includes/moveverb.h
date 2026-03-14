@@ -9,4 +9,5 @@ private:
 public:
     MoveVerb(int deltaX, int deltaY);
     void Attempt(Character character) const override;
+    std::string GetText(Character character) const override {return "";}
 };

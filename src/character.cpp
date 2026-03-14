@@ -108,4 +108,13 @@ Inventory Character::GetInventory() const
 {
     return Inventory(_worldData, *GetCharacterData().GetInventoryIndex());
 }
+void Character::ToggleFlag(FlagType flag)
+{
+    GetCharacterData().SetFlag(flag, !GetCharacterData().GetFlag(flag));
+}
+bool Character::HasFlag(FlagType flag) const
+{
+    return GetCharacterData().GetFlag(flag);
+}
+
 

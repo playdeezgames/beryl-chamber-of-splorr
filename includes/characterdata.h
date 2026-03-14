@@ -2,6 +2,7 @@
 #include "common.h"
 #include "charactertype.h"
 #include "statistictype.h"
+#include "flagtype.h"
 class CharacterData
 {
 private:
@@ -12,6 +13,7 @@ private:
     std::map<StatisticType, int> _statisticMaximums;
     std::map<StatisticType, int> _statisticMinimums;
     std::optional<size_t> _inventoryIndex;
+    std::set<FlagType> _flags;
     CharacterData();
 public:
     CharacterData(CharacterType characterType, size_t boardIndex, size_t locationIndex);
@@ -28,4 +30,6 @@ public:
     void SetStatisticMinimum(StatisticType statisticType, int minimum);
     void SetInventoryIndex(std::optional<size_t> inventoryIndex);
     std::optional<size_t> GetInventoryIndex() const;
+    void SetFlag(FlagType flag, bool value);
+    bool GetFlag(FlagType flag) const;
 };

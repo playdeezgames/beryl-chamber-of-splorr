@@ -98,3 +98,18 @@ std::optional<size_t> CharacterData::GetInventoryIndex() const
 {
     return _inventoryIndex;
 }
+void CharacterData::SetFlag(FlagType flag, bool value)
+{
+    if(value)
+    {
+        _flags.insert(flag);
+    }
+    else
+    {
+        _flags.erase(flag);
+    }
+}
+bool CharacterData::GetFlag(FlagType flag) const
+{
+    return _flags.contains(flag);
+}
