@@ -4,6 +4,7 @@
 std::optional<GameStateType> ActionMenuState::HandleMenuItem(VerbType menuItem)
 {
     _world.GetAvatar()->AttemptVerb(menuItem);
+    ClearMenuItems();
     return Neutral::DetermineState(_world);
 }
 std::optional<GameStateType> ActionMenuState::HandleCancel()

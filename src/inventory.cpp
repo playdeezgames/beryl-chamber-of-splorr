@@ -42,4 +42,26 @@ std::vector<Item> Inventory::GetItems() const
         [this](size_t index){return Item(_worldData, index);});
     return result;
 }
+bool Inventory::HasItemOfType(ItemType itemType) const
+{
+    for(auto item: GetItems())
+    {
+        if(item.GetItemType() == itemType)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+std::optional<Item> Inventory::GetItemOfType(ItemType itemType) const
+{
+    for(auto item: GetItems())
+    {
+        if(item.GetItemType() == itemType)
+        {
+            return Item(_worldData, item.GetIndex());
+        }
+    }
+    return std::nullopt;
+}
 

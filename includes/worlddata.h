@@ -32,4 +32,5 @@ public:
     const ItemData& GetItemData(size_t itemIndex) const;
     InventoryData& GetInventoryData(size_t inventoryIndex);
     const InventoryData& GetInventoryData(size_t inventoryIndex) const;
+    void RecycleItem(size_t itemIndex);
 };

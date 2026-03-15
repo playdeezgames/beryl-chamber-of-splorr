@@ -15,6 +15,11 @@ protected:
     {
         _menuItems.emplace_back(item, text);
     }
+    void ClearMenuItems()
+    {
+        _menuItems.clear();
+        _menuItemIndex = 0;
+    }
     virtual std::optional<GameStateType> HandleMenuItem(TItem menuItem) = 0;
     virtual std::optional<GameStateType> HandleCancel() = 0;
     virtual void InitializeMenuItems() = 0;

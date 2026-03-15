@@ -7,17 +7,36 @@ void N00bCharacterOutfitter::Initialize(Character character) const
     character.SetStatistic(StatisticType::HEALTH, 100);
     character.SetStatisticMaximum(StatisticType::HEALTH, 100);
     character.SetStatisticMinimum(StatisticType::HEALTH, 0);
+    character.SetStatistic(StatisticType::STOMACH, 0);
+    character.SetStatisticMinimum(StatisticType::STOMACH, 0);
 }
 void N00bCharacterOutfitter::DoTurn(Character character) const
 {
-    auto satiety = *character.GetStatistic(StatisticType::SATIETY);
-    if(satiety > 0)
+    auto stomach = *character.GetStatistic(StatisticType::STOMACH);
+    character.ChangeStatistic(StatisticType::STOMACH, -1);
+    if(stomach <= character.GetStatisticMinimum(StatisticType::STOMACH))
     {
-        character.ChangeStatistic(StatisticType::SATIETY, -1);
+        auto satiety = *character.GetStatistic(StatisticType::SATIETY);
+        if(satiety > character.GetStatisticMinimum(StatisticType::SATIETY))
+        {
+            character.ChangeStatistic(StatisticType::SATIETY, -1);
+        }
+        else
+        {
+            character.ChangeStatistic(StatisticType::HEALTH, -1);
+        }
     }
     else
     {
-        character.ChangeStatistic(StatisticType::HEALTH, -1);
+        auto satiety = *character.GetStatistic(StatisticType::SATIETY);
+        if(satiety < character.GetStatisticMaximum(StatisticType::SATIETY))
+        {
+            character.ChangeStatistic(StatisticType::SATIETY, 1);
+        }
+        else
+        {
+            character.ChangeStatistic(StatisticType::HEALTH, 1);
+        }
     }
 }
 N00bCharacterOutfitter::N00bCharacterOutfitter()

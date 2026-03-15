@@ -67,6 +67,12 @@ void DrawStats(size_t offsetX, size_t offsetY, World& world, FrameBuffer& frameB
         std::format("HLT:{:>3}/{:>3}    ", avatar.GetStatistic(StatisticType::HEALTH).value_or(0), avatar.GetStatisticMaximum(StatisticType::HEALTH)), 
         FrameBufferCellColor::RED, 
         std::nullopt);
+    frameBuffer.WriteText(
+        offsetX, 
+        offsetY++, 
+        std::format("STO:{}       ", avatar.GetStatistic(StatisticType::STOMACH).value_or(0)), 
+        FrameBufferCellColor::LIGHT_MAGENTA, 
+        std::nullopt);
 }
 void InPlayState::Draw()
 {

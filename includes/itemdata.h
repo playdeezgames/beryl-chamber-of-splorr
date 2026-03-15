@@ -11,4 +11,5 @@ public:
     ItemType GetItemType() const{return _itemType;}
     void SetInventoryIndex(size_t inventoryIndex){_inventoryIndex = inventoryIndex;}
     size_t GetInventoryIndex() const{return _inventoryIndex;}
+    void Clear(){/* nada */}
 };

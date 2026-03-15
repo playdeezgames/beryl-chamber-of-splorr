@@ -33,4 +33,8 @@ Inventory Item::GetInventory() const
 {
     return Inventory(_worldData, GetItemData().GetInventoryIndex());
 }
+void Item::Recycle()
+{
+    _worldData.RecycleItem(GetIndex());
+}
 

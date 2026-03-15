@@ -19,4 +19,6 @@ public:
     void RemoveItem(Item item);
     bool HasItems() const;
     std::vector<Item> GetItems() const;
+    bool HasItemOfType(ItemType itemType) const;
+    std::optional<Item> GetItemOfType(ItemType itemType) const;
 };

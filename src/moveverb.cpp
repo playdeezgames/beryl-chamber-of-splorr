@@ -29,9 +29,9 @@ void MoveVerb::Attempt(Character character) const
     nextLocation.SetCharacter(character);
     location.SetCharacter(std::nullopt);
     character.SetLocation(nextLocation);
-    if(location.HasInventory())
+    if(nextLocation.HasInventory())
     {
-        auto locationInventory = location.GetInventory();
+        auto locationInventory = nextLocation.GetInventory();
         auto characterInventory = character.GetInventory();
         for(auto item : locationInventory.GetItems())
         {

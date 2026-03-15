@@ -114,3 +114,8 @@ const InventoryData& WorldData::GetInventoryData(size_t inventoryIndex) const
 {
     return _inventories[inventoryIndex];
 }
+void WorldData::RecycleItem(size_t itemIndex)
+{
+    GetItemData(itemIndex).Clear();
+    _recycledItems.insert(itemIndex);
+}

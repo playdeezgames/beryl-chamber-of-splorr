@@ -20,4 +20,5 @@ public:
     FrameBufferCellColor GetFrameForeground() const;
     void SetInventory(Inventory inventory);
     Inventory GetInventory() const;
+    void Recycle();
 };
