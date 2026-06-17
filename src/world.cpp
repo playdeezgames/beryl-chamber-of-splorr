@@ -36,6 +36,7 @@ Board World::CreateBoard(size_t columns, size_t rows, LocationType locationType)
             board.GetLocation(column, row).Initialize();
         }
     }
+    board.Initialize();
     return board;
 }
 Character World::CreateCharacter(CharacterType characterType, Location location)

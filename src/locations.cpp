@@ -1,6 +1,7 @@
 #include "locations.h"
 #include "bluewalllocationoutfitter.h"
 #include "floorlocationoutfitter.h"
+#include "signlocationoutfitter.h"
 std::map<LocationType, std::unique_ptr<LocationOutfitter>> Locations::_outfitters;
 void Locations::Initialize()
 {
@@ -8,6 +9,7 @@ void Locations::Initialize()
     {
         _outfitters.emplace(LocationType::BLUE_WALL, std::make_unique<BlueWallLocationOutfitter>());
         _outfitters.emplace(LocationType::FLOOR, std::make_unique<FloorLocationOutfitter>());
+        _outfitters.emplace(LocationType::SIGN, std::make_unique<SignLocationOutfitter>());
     }
 }
 const LocationOutfitter& Locations::GetOutfitter(LocationType locationType)

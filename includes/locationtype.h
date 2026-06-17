@@ -2,5 +2,6 @@
 enum class LocationType
 {
     FLOOR,
-    BLUE_WALL
+    BLUE_WALL,
+    SIGN
 };

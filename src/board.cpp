@@ -1,5 +1,6 @@
 #include "board.h"
 #include "character.h"
+#include "boards.h"
 Board::Board(
     WorldData& worldData, 
     size_t index)
@@ -46,4 +47,8 @@ void Board::DoTurn()
             }
         }
     }
+}
+void Board::Initialize()
+{
+    
 }

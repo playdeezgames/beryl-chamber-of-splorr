@@ -16,4 +16,5 @@ public:
     size_t GetColumns() const;
     size_t GetRows() const;
     void DoTurn();
+    void Initialize();
 };
